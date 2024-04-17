@@ -1,6 +1,6 @@
 using POS.Domain.ValueObjects;
 
-namespace POS.Domain.Services
+namespace POS.Application.Services
 {
     public interface IOrderService
     {

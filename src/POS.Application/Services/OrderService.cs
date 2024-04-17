@@ -1,9 +1,9 @@
 using POS.Domain.Entities;
 using POS.Domain.Enums;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 using POS.Domain.ValueObjects;
 
-namespace POS.Domain.Services
+namespace POS.Application.Services
 {
     public class OrderService : IOrderService
     {

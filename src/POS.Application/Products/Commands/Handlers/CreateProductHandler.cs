@@ -1,5 +1,5 @@
 using MediatR;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 using POS.Domain.Entities;
 using POS.Domain.Enums;
 using POS.Domain.Types;
@@ -24,7 +24,8 @@ namespace POS.Application.Products.Commands.Handlers
                                       request.Vendor,
                                       request.Price,
                                       request.Quantity,
-                                      request.ImageUrl);
+                                      request.ImageUrl,
+                                      request.CategoryId);
 
             await _productRepository.AddAsync(product);
 

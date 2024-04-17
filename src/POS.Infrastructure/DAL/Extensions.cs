@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using POS.Domain.DAL;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 using POS.Infrastructure.Options;
 using POS.Infrastructure.DAL.Decorators;
 using POS.Infrastructure.DAL.Repositories;

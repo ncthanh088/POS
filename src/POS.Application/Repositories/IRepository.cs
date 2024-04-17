@@ -1,11 +1,11 @@
 using System.Linq.Expressions;
 
-namespace POS.Domain.Repositories;
+namespace POS.Application.Repositories;
 public interface IRepository<T>
 {
     Task<IEnumerable<T>> FindAllAsync();
     Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
-    Task<T> FindAsync(Expression<Func<T, bool>> predicate); // Predicate only return bool vaue without agument. 
+    Task<T> FindAsync(Expression<Func<T, bool>> predicate); // Predicate only return bool vaue without agument.
     Task<T> FindAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
     IQueryable<T> FindAll(params Expression<Func<T, object>>[] includes);
     IQueryable<T> FindAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);

@@ -1,6 +1,6 @@
 using MediatR;
 using POS.Domain.Entities;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 
 namespace POS.Application.Carts.Commands.Handlers;
 

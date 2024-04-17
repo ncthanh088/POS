@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace POS.WebApp.Services
@@ -16,25 +15,18 @@ namespace POS.WebApp.Services
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            try
+            var response = await _client.GetAsync("products");
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _client.GetAsync("products");
-                var content = await response.Content.ReadAsStringAsync();
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new ApplicationException(content);
-                }
-                var products = JsonSerializer.Deserialize<IEnumerable<Product>>(content, _options);
+                throw new ApplicationException(content);
+            }
+            var products = JsonSerializer.Deserialize<IEnumerable<Product>>(content, _options);
 
-                if (products is null)
-                    return new List<Product> { };
-                return products;
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex);
-                throw;
-            }
+            if (products is null)
+                return new List<Product> { };
+            return products;
+
         }
     }
 }

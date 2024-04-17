@@ -4,7 +4,7 @@ namespace POS.Domain.Enums
     {
         Other = 0,
         Kitchen = 1,
-        Housingc = 2,
+        Housing = 2,
         Clothing = 3,
     }
 }

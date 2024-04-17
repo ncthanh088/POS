@@ -1,8 +1,8 @@
 using MediatR;
-using POS.Application.Exceptions;
 using POS.Domain.Entities;
 using POS.Domain.ValueObjects;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
+using POS.Application.Exceptions;
 
 namespace POS.Application.Orders.Commands.Handlers;
 

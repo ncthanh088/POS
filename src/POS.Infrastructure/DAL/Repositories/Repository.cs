@@ -1,4 +1,4 @@
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 
 namespace POS.Infrastructure.DAL.Repositories;
 

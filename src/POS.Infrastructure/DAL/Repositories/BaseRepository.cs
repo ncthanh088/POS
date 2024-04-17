@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 
 namespace POS.Infrastructure.DAL.Repositories;
 

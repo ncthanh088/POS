@@ -1,5 +1,5 @@
 using MediatR;
-using POS.Domain.Repositories;
+using POS.Application.Repositories;
 using POS.Domain.Entities;
 using POS.Application.DTO;
 using POS.Application.Exceptions;

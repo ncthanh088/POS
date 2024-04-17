@@ -13,9 +13,10 @@ public class Product
     public ProductPrice Price { get; private set; }
     public ProductQuantity Quantity { get; private set; }
     public string ImageUrl { get; set; }
+    public int CategoryId { get; set; }
 
     public Product(ProductId id, ProductName name, ProductDescription description, ProductType type,
-        Vendor vendor, ProductPrice price, ProductQuantity quantity, string imageUrl)
+        Vendor vendor, ProductPrice price, ProductQuantity quantity, string imageUrl, int categoryId)
     {
         Id = id;
         Name = name;
@@ -25,5 +26,6 @@ public class Product
         Price = price;
         Quantity = quantity;
         ImageUrl = imageUrl;
+        CategoryId = categoryId;
     }
 }

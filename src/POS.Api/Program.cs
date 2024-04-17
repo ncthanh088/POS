@@ -54,7 +54,7 @@ builder.Services.AddCors(options =>
 // Configure the HTTP request pipeline.
 var app = builder.Build();
 app.UseDeveloperExceptionPage();
-app.UseStaticFiles();
+// app.UseStaticFiles();
 app.UseRouting();
 app.UseCors(theSpecificOrigin);
 

@@ -56,5 +56,16 @@ namespace POS.Application.DTO
                 ImageUrl = product.ImageUrl,
             };
         }
+
+        public static CategoryDTO AsDto(this Category category)
+        {
+            return new()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                Products = category.Products,
+            };
+        }
     }
 }

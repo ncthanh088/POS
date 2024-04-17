@@ -1,8 +1,8 @@
 using MediatR;
-using POS.Application.DTO;
 using POS.Domain.Entities;
-using POS.Domain.Repositories;
 using POS.Domain.ValueObjects;
+using POS.Application.DTO;
+using POS.Application.Repositories;
 
 namespace POS.Application.Products.Queries.Handlers;
 
