@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "NET Core Launch (backend)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/POS.Api/bin/Debug/net8.0/POS.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/POS.Api",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "type": "DotNetAutoAttach",
+      "request": "launch",
+      "name": ".NET Core Watch",
+      "args": [],
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "project": "${workspaceFolder}/src/POS.WebApp",
+    },
+    {
+      "name": ".NET Core Debug Blazor Web Assembly in Chrome",
+      "type": "blazorwasm",
+      "request": "launch",
+      "timeout": 30000,
+      "url": "http://localhost:5001",
+      "webRoot": "${workspaceFolder}/src/WebApp",
+    },
+    {
+      "name": "Watch",
+      "type": "coreclr",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/src/POS.WebApp",
+      "program": "dotnet",
+      "args": [
+        "watch",
+        "--project",
+        ".",
+        "--verbose" // Let's us confirm browser connects with hot reload capabilities
+      ],
+      "preLaunchTask": "build" // Ensure we don't watch an unbuilt site
+    },
+    {
+      "name": "Attach",
+      "type": "blazorwasm",
+      "request": "attach",
+      "cwd": "${workspaceFolder}/src/POS.WebApp",
+      "url": "https://localhost:5001", // Tell launch where to find site
+      "timeout": 120000, // Allows time for the site to launch
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Backend and fontend",
+      "configurations": [
+        "NET Core Launch (backend)",
+      ],
+      "stopAll": true
+    }
+  ]
+}
