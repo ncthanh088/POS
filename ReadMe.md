@@ -89,12 +89,7 @@ https://codemurals.blogspot.com/2021/06/local-storage-in-blazor-using-blazored.h
 https://theplanbrand.com/account/login?return_url=%2Faccount
 
 
-Migration:
-- dotnet ef migrations add Initial --context EsportshubApi.Models.ApplicationDbContext -o YourFolderPath
-dotnet ef  migrations add Initial --context  MyShopDbContext -o MyShop.Infrastructure/DAL/Migrations
+Migration cmd:
+dotnet ef --startup-project src/POS.Api/POS.Api.csproj migrations add create-database --context POSDbContext --output-dir DAL/Migrations --project src/POS.Infrastructure/POS.Infrastructure.csproj
 
-
-dotnet ef migrations add Initial --project MyShop.Infrastructure --startup-project MyShop.Api --output-dir MyShop.Infrastructure\DAL\Migrations
-
-
-dotnet ef --startup-project ./POS.Api/POS.Api.csproj migrations add initDatabase --context MyShopDbContext --output-dir ./POS.Infrastructure/DAL/Migrations --project ../POS.Infrastructure/POS.Infrastructure.csproj
+dotnet ef --startup-project src/POS.Api database update
