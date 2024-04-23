@@ -93,3 +93,10 @@ Migration cmd:
 dotnet ef --startup-project src/POS.Api/POS.Api.csproj migrations add create-database --context POSDbContext --output-dir DAL/Migrations --project src/POS.Infrastructure/POS.Infrastructure.csproj
 
 dotnet ef --startup-project src/POS.Api database update
+
+
+css config:
+npx tailwindcss -i .\Styles\tailwind.css -o .\wwwroot\css\tailwind.css --watch
+
+debugging:
+https://stackoverflow.com/questions/73564523/blazor-hot-reload-debugging-using-vscode

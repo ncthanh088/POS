@@ -9,6 +9,8 @@ using POS.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using POS.Application.Utility;
+using POS.Infrastructure.Utility;
 
 namespace POS.Infrastructure
 {
@@ -26,6 +28,7 @@ namespace POS.Infrastructure
             services.AddSQLites(configuration);
             services.AddScoped<IDataGenerator, DataGenerator>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddScoped<IPosUtility, PosUtility>();
             services.AddSecurity();
             services.AddAuth(configuration);
             services.AddHttpContextAccessor();

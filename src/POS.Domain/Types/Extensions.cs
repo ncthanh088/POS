@@ -11,4 +11,14 @@ public static class Extensions
 
         return Enum.TryParse<T>(value, true, out var result) ? result : defaultValue;
     }
+
+    public static string ReadSvgContent(this string fileName, string filePatch)
+    {
+        string filePath = Path.Combine(filePatch, fileName);
+        if (File.Exists(filePath))
+        {
+            return File.ReadAllText(filePath);
+        }
+        return string.Empty;
+    }
 }

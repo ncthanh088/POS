@@ -1,10 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
-<HeaderLayout />
-<div class="container">
-    <NavMenu />
-    <div class="main">
-        @Body
+<div class="flex flex-col flex-wrap">
+    <HeaderLayout />
+    <div class="flex flex-row flex-wrap">
+        <NavMenu />
+        <div class="w-3/5">
+            @Body
+        </div>
+        @* <POS.WebApp.Components.CartComponent /> *@
     </div>
-    <FooterLayout />
 </div>

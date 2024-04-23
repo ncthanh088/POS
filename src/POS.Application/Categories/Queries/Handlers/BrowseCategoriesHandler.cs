@@ -1,20 +1,30 @@
 using MediatR;
+using POS.Domain.Types;
 using POS.Application.DTO;
 using POS.Application.Repositories;
+using POS.Application.Utility;
 
 namespace POS.Application.Categories.Queries.Handlers;
 
 public class BrowseCategoriesHandler : IRequestHandler<BrowseCategories, IEnumerable<CategoryDTO>>
 {
     private readonly ICategoriesRepository _categoriesRepository;
+    private readonly IPosUtility _utility;
 
-    public BrowseCategoriesHandler(ICategoriesRepository categoriesRepository)
+    public BrowseCategoriesHandler(ICategoriesRepository categoriesRepository, IPosUtility utility)
     {
         _categoriesRepository = categoriesRepository;
+        _utility = utility;
     }
 
     public async Task<IEnumerable<CategoryDTO>> Handle(BrowseCategories request, CancellationToken cancellationToken)
     {
-        return await _categoriesRepository.GetCategoriesAsync();
+        var categories = await _categoriesRepository.GetCategoriesAsync();
+
+        foreach (var category in categories)
+        {
+            category.Icon = category.Icon.ReadSvgContent(_utility.GetImageUrl());
+        }
+        return categories;
     }
 }

@@ -1,8 +1,6 @@
-using POS.Domain.Entities;
-
-namespace POS.Application.DTO
+namespace POS.WebApp.Models
 {
-    public class CategoryDTO
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }

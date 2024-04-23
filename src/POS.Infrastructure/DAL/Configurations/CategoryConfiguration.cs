@@ -13,6 +13,9 @@ namespace POS.Infrastructure.DAL.Configurations
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(255);
+
+            builder.Property(x => x.Icon)
+                .HasMaxLength(255);
         }
     }
 }

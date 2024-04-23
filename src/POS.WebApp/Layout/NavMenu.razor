@@ -1,13 +1,11 @@
-﻿<nav>
+﻿<nav class="w-1/5">
     <section id="navbar">
-        <ul>
-            <li>Menu</li>
-            <li>Tables</li>
-            <li>Reservation</li>
-            <li>Chat</li>
-            <li>Dashboard</li>
-            <li>Accounting</li>
-            <li>Settings</li>
+        <ul class="list-none">
+            @foreach (var item in MenuItems)
+            {
+                <li class=" -bg--black hover:-bg--bg-black2 -text--white
+               p-4 rounded-xl text-left mt-1 font-mono">@item</li>
+            }
         </ul>
 
     </section>

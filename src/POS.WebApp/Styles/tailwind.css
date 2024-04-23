@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#categories ul li svg {
+    width: 1rem;
+    height: 1rem;
+    fill: var(--bg-black2);
+}

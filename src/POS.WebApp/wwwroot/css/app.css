@@ -1,6 +1,6 @@
 /* variables declared here - these are the colors for our pages, as well as the font stacks and sizes. */
 :root {
-    --black: #171321;
+    --black: #121315;
     --dkblue: #0d314b;
     --plum: #4b0d49;
     --hotmag: #ff17e4;
@@ -165,6 +165,8 @@ a:hover {
     margin-top: 15px;
     border-radius: 10px;
     width: 20%;
+    min-width: 100px;
+    min-height: 100px;
 }
 
 #categories ul li:hover {

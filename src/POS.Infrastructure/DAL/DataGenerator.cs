@@ -20,10 +20,14 @@ namespace POS.Infrastructure.DAL
             {
                 // Add data for Categories table
                 var categories = new Category[] {
-                    new Category(1001,"Coffee", "Various types of coffee drinks" ),
-                    new Category(1002,"Breakfast", "Breakfast items such as sandwiches, pastries, etc."),
-                    new Category(1003,"Tea", "Different flavors of tea drinks"),
-                    new Category(1004,"Beverages", "Various beverages including coffee, tea, and soft drinks")
+                    new Category(1001,"Coffee", "Various types of coffee drinks", string.Empty),
+                    new Category(1002,"Breakfast", "Breakfast items such as sandwiches, pastries, etc.", string.Empty),
+                    new Category(1003,"Tea", "Different flavors of tea drinks", string.Empty),
+                    new Category(1005,"Lunch", "Various types of water" , string.Empty),
+                    new Category(1006,"Dinner", "Dinner items such as pastries, etc.", string.Empty),
+                    new Category(1004,"Beverages", "Various beverages including coffee, tea, and soft drinks", string.Empty),
+                    new Category(1007,"Milk", "Different flavors of milk drinks", string.Empty),
+                    new Category(1008,"Orders", "Various beverages including coffee, tea, and soft drinks", string.Empty)
                 };
                 _dbContext.Categories.AddRange(categories);
                 await _dbContext.SaveChangesAsync();

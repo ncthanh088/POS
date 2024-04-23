@@ -64,6 +64,7 @@ namespace POS.Application.DTO
                 Id = category.Id,
                 Name = category.Name,
                 Description = category.Description,
+                Icon = category.Icon,
                 Products = category.Products,
             };
         }

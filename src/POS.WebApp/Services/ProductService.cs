@@ -13,20 +13,9 @@ namespace POS.WebApp.Services
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public Task<IEnumerable<Product>> GetProductsAsync()
         {
-            var response = await _client.GetAsync("products");
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content);
-            }
-            var products = JsonSerializer.Deserialize<IEnumerable<Product>>(content, _options);
-
-            if (products is null)
-                return new List<Product> { };
-            return products;
-
+            throw new HttpRequestException();
         }
     }
 }

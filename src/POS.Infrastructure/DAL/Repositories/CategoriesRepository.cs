@@ -22,6 +22,7 @@ namespace POS.Infrastructure.DAL
                                 Id = x.Id,
                                 Name = x.Name,
                                 Description = x.Description,
+                                Icon = x.Icon,
                                 Products = x.Products.ToList(),
                             })
                             .ToListAsync();
