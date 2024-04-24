@@ -3,25 +3,6 @@
 <PageTitle>Point Of Sale</PageTitle>
 
 <section>
-    <article id="categories">
-        <ul class="flex flex-wrap justify-start">
-            @if (Categories?.Count() > 0)
-            {
-                @foreach (var category in Categories)
-                {
-                    <li class="-text--bg-black2 -bg--bg-green rounded-[10px] m-3 size-4 text-sm min-h-24 min-w-24 p-3 hover:-bg--bg-white">
-                        @((MarkupString)@category.Icon)
-                        <h4>@category.Name</h4>
-                        <p>@category.Products.Count items</p>
-                    </li>
-                }
-            }
-            else
-            {
-                <h1>Not found...</h1>
-            }
-        </ul>
-    </article>
-    <article id="products">
-    </article>
+    <CategoryComponent />
+    <article id="products"></article>
 </section>

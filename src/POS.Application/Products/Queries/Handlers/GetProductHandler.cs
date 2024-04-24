@@ -1,6 +1,5 @@
 using MediatR;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.DTO;
 using POS.Application.Repositories;
 
@@ -17,7 +16,7 @@ internal sealed class GetProductHandler : IRequestHandler<GetProduct, ProductDto
 
     public async Task<ProductDto> Handle(GetProduct request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.FindAsync(x => x.Id == new ProductId(request.ProductId));
+        var product = await _productRepository.FindAsync(x => x.Id == request.ProductId);
 
         return product.AsDto();
     }

@@ -18,11 +18,11 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCart>
     public async Task<Unit> Handle(RemoveItemFromCart request, CancellationToken cancellationToken)
     {
         var cart = await _cartRepository
-            .FindAsync(x => x.UserId == new Domain.ValueObjects.UserId(request.UserId), x => x.Items);
+            .FindAsync(x => x.UserId == request.UserId, x => x.Items);
 
         var item = cart
             .Items
-            .FirstOrDefault(x => x.ProductId == new Domain.ValueObjects.ProductId(request.ProductId));
+            .FirstOrDefault(x => x.ProductId == request.ProductId);
 
         await _itemRepository.DeleteAsync(item);
 

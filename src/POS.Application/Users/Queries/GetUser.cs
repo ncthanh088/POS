@@ -1,6 +1,5 @@
 using MediatR;
 using POS.Application.DTO;
-using POS.Domain.ValueObjects;
 
 namespace POS.Application.Users.Queries
 {

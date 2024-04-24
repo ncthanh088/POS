@@ -1,6 +1,5 @@
 using MediatR;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.DTO;
 using POS.Application.Repositories;
 using POS.Application.Exceptions;
@@ -18,7 +17,7 @@ internal sealed class GetUserHandler : IRequestHandler<GetUser, UserDto>
 
     public async Task<UserDto> Handle(GetUser request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.Id == new UserId(request.UserId));
+        var user = await _userRepository.FindAsync(x => x.Id == request.UserId);
 
         if (user is null)
         {

@@ -1,6 +1,5 @@
 using MediatR;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.Repositories;
 using POS.Application.Exceptions;
 
@@ -17,10 +16,9 @@ internal sealed class CompleteOrderHandler : IRequestHandler<CompleteOrder>
 
     public async Task<Unit> Handle(CompleteOrder request, CancellationToken cancellationToken)
     {
-        var orderId = new OrderId(request.OrderId);
-        var order = await _orderRepository.FindAsync(x => x.Id == orderId);
+        var order = await _orderRepository.FindAsync(x => x.Id == request.OrderId);
 
-        if (order is null || order.UserId != new UserId(request.UserId))
+        if (order is null || order.UserId != request.UserId)
         {
             throw new OrderNotFoundException(request.OrderId, request.UserId);
         }

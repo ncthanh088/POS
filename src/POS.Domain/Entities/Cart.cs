@@ -1,12 +1,11 @@
 using POS.Domain.Exceptions;
-using POS.Domain.ValueObjects;
 
 namespace POS.Domain.Entities
 {
     public class Cart
     {
-        public CartId Id { get; private set; }
-        public UserId UserId { get; private set; }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
         private ISet<Item> _items = new HashSet<Item>();
         public DateTime CreatedAt { get; private set; }
 
@@ -65,7 +64,7 @@ namespace POS.Domain.Entities
             item.Update(product);
         }
 
-        private Item GetItem(ProductId productId)
+        private Item GetItem(Guid productId)
             => _items.FirstOrDefault(x => x.ProductId == productId);
     }
 }

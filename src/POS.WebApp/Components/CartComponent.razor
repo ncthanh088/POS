@@ -1,34 +1,19 @@
-﻿<div id="cart" class="w-1/5 size-4 -bg--purple -text--orange">
-    <div class="cart-title">
+﻿<div id="cart" class="-text--white size-4 w-1/5">
+    <div class="">
         <label for="order">Order: 23239045895</label>
         <button>x</button>
-        <p>xin chao ba con </p>
-        <p>xin chao ưewewba con </p>
     </div>
 
     <div id="items">
         <ul>
-            <li>
-                <p>Item name1 x2</p>
-                <p>$32.00</p>
-            </li>
-            <li>
-                <p>Item name2 x2</p>
-                <p>$32.00</p>
-            </li>
-            <li>
-                <p>Item name3 x4</p>
-                <p>$32.00</p>
-            </li>
-            <li>
-                <p>Item name4 x1</p>
-                <p>$32.00</p>
-            </li>
+            @foreach (var item in Items)
+            {
+                <li><CartItemComponent Item=@item /></li>
+            }
         </ul>
     </div>
 
     <div id="discount">
-
     </div>
 
     <div id="payment">

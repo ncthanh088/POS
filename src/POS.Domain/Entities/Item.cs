@@ -1,15 +1,13 @@
-using POS.Domain.ValueObjects;
-
 namespace POS.Domain.Entities;
 
 public class Item
 {
     public Guid Id { get; set; }
-    public CartId CartId { get; set; }
+    public Guid CartId { get; set; }
     public Cart Cart { get; set; }
-    public ProductId ProductId { get; private set; }
+    public Guid ProductId { get; private set; }
     public Product Product { get; private set; }
-    public ProductName ProductName { get; private set; }
+    public string ProductName { get; private set; }
     public string ImageUrl { get; set; }
     public decimal UnitPrice { get; private set; }
     public int Quantity { get; private set; }
@@ -27,7 +25,7 @@ public class Item
         Quantity = quantity;
     }
 
-    public Item(ProductId productId, ProductName productName,
+    public Item(Guid productId, string productName,
         string imageUrl, int quantity, decimal unitPrice)
     {
         ProductId = productId;

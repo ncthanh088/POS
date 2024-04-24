@@ -1,7 +1,6 @@
 using POS.Domain.Entities;
 using POS.Domain.Enums;
 using POS.Application.Repositories;
-using POS.Domain.ValueObjects;
 
 namespace POS.Application.Services
 {
@@ -14,7 +13,7 @@ namespace POS.Application.Services
             _orderRepository = orderRepository;
         }
 
-        public async Task<bool> HasPendingOrderAsync(UserId userId)
+        public async Task<bool> HasPendingOrderAsync(Guid userId)
         {
             return await _orderRepository
                 .AnyAsync(x => x.UserId == userId

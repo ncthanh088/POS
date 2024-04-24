@@ -1,23 +1,22 @@
 using POS.Domain.Enums;
 using POS.Domain.Exceptions;
-using POS.Domain.ValueObjects;
 
 namespace POS.Domain.Entities;
 
 public class Order
 {
-    public OrderId Id { get; set; }
-    public UserId UserId { get; private set; }
+    public Guid Id { get; set; }
+    public Guid UserId { get; private set; }
     public IEnumerable<Item> Items { get; private set; }
-    public OrderTotalAmount TotalAmount { get; private set; }
-    public Currency Currency { get; private set; }
+    public decimal TotalAmount { get; private set; }
+    public string Currency { get; private set; }
     public OrderStatus Status { get; private set; }
 
     protected Order()
     {
     }
 
-    public Order(OrderId id, UserId userId, IEnumerable<Item> items, Currency currency)
+    public Order(Guid id, Guid userId, IEnumerable<Item> items, string currency)
     {
         if (items == null || !items.Any())
         {

@@ -1,23 +1,21 @@
-using POS.Domain.ValueObjects;
-
 namespace POS.Domain.Entities
 {
     public class User
     {
-        public UserId Id { get; private set; }
-        public Email Email { get; private set; }
-        public Username Username { get; private set; }
-        public Password Password { get; private set; }
-        public FullName FullName { get; private set; }
-        public Role Role { get; private set; }
+        public Guid Id { get; private set; }
+        public string Email { get; private set; }
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        public string FullName { get; private set; }
+        public string Role { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
         protected User()
         {
         }
 
-        public User(UserId id, Email email, Username username, Password password,
-            FullName fullName, Role role, DateTime createdAt)
+        public User(Guid id, string email, string username, string password,
+            string fullName, string role, DateTime createdAt)
         {
             Id = id;
             Email = email;

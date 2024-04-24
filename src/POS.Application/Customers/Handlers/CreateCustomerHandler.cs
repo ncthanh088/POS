@@ -1,7 +1,6 @@
 using MediatR;
 using POS.Application.Exceptions;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.Repositories;
 
 namespace POS.Application.Customers.Handlers;
@@ -23,13 +22,13 @@ internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Gu
 
     public async Task<Guid> Handle(CreateCustomer request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.Id == new UserId(request.CustomerId));
+        var user = await _userRepository.FindAsync(x => x.Id == request.CustomerId);
         if (user is null)
         {
             throw new UserNotFoundException(request.CustomerId);
         }
 
-        if (user.Role != "user")
+        if (user.Role != "User")
         {
             return Guid.Empty;
         }

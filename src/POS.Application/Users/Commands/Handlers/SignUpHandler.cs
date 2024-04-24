@@ -1,7 +1,6 @@
 using MediatR;
 using POS.Domain.Time;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.Security;
 using POS.Application.Exceptions;
 using POS.Application.Repositories;
@@ -25,30 +24,24 @@ namespace POS.Application.Users.Commands.Handlers
 
         public async Task<Unit> Handle(SignUp request, CancellationToken cancellationToken)
         {
-            // Validation by strong type.
-            var userId = new UserId(request.UserId);
-            var email = new Email(request.Email);
-            var username = new Username(request.Username);
-            var password = new Password(request.Password);
-            var fullName = new FullName(request.FullName);
-            var role = string.IsNullOrWhiteSpace(request.Role) ? Role.User() : new Role(request.Role);
+            var role = string.IsNullOrWhiteSpace(request.Role) ? "User" : request.Role;
 
-            if (await _userRepository.FindAsync(x => x.Email == email) != null)
+            if (await _userRepository.FindAsync(x => x.Email == request.Email) != null)
             {
-                throw new EmailAlreadyInUseException(email);
+                throw new EmailAlreadyInUseException(request.Email);
             }
 
-            if (await _userRepository.FindAsync(x => x.Username == username) != null)
+            if (await _userRepository.FindAsync(x => x.Username == request.Username) != null)
             {
-                throw new UsernameAlreadyInUseException(username);
+                throw new UsernameAlreadyInUseException(request.Username);
             }
 
-            var securedPassword = _passwordManager.Secure(password);
-            var user = new User(userId,
-                                email,
-                                username,
+            var securedPassword = _passwordManager.Secure(request.Password);
+            var user = new User(request.UserId,
+                                request.Email,
+                                request.Username,
                                 securedPassword,
-                                fullName,
+                                request.FullName,
                                 role,
                                 _clock.Current());
 

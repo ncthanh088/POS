@@ -12,7 +12,6 @@ namespace POS.WebApp.Services
         {
             _client = client;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
         }
 
         public async Task<IEnumerable<Category>> GetCategoriesAsync()

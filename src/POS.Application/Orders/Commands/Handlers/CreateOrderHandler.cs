@@ -1,6 +1,5 @@
 using MediatR;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 using POS.Application.Services;
 using POS.Application.Repositories;
 using POS.Application.Exceptions;
@@ -24,14 +23,12 @@ internal sealed class CreateOrderHandler : IRequestHandler<CreateOrder>
 
     public async Task<Unit> Handle(CreateOrder request, CancellationToken cancellationToken)
     {
-        var userId = new UserId(request.UserId);
-
-        if (await _orderService.HasPendingOrderAsync(userId))
+        if (await _orderService.HasPendingOrderAsync(request.UserId))
         {
             throw new PendingOrderException(request.UserId);
         }
 
-        var cart = await _cartRepository.FindAsync(x => x.UserId == userId);
+        var cart = await _cartRepository.FindAsync(x => x.UserId == request.UserId);
 
         var items = cart.Items
             .Select(x => new Item(x.ProductId, x.ProductName, x.ImageUrl, x.Quantity, x.UnitPrice))

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using POS.WebApp.Models;
 
 namespace POS.WebApp.Services
 {

@@ -1,7 +1,6 @@
 ﻿using Bogus;
 using POS.Application.Data;
 using POS.Domain.Entities;
-using POS.Domain.ValueObjects;
 
 namespace POS.Infrastructure.DAL
 {
@@ -56,11 +55,11 @@ namespace POS.Infrastructure.DAL
                 var faker = new Faker();
 
                 var customers = new Faker<Customer>()
-                    .RuleFor(c => c.CustomerId, f => new UserId(Guid.NewGuid()))
-                    .RuleFor(c => c.FirstName, f => new FirstName(f.Person.FirstName))
-                    .RuleFor(c => c.LastName, f => new LastName(f.Person.LastName))
-                    .RuleFor(c => c.Phone, f => new Phone(f.Person.Phone))
-                    .RuleFor(c => c.Address, f => new Address(f.Address.FullAddress()))
+                    .RuleFor(c => c.CustomerId, f => Guid.NewGuid())
+                    .RuleFor(c => c.FirstName, f => f.Person.FirstName)
+                    .RuleFor(c => c.LastName, f => f.Person.LastName)
+                    .RuleFor(c => c.Phone, f => f.Person.Phone)
+                    .RuleFor(c => c.Address, f => f.Address.FullAddress())
                     .Generate(10);
 
                 _dbContext.Customers.AddRange(customers);
@@ -160,30 +159,30 @@ namespace POS.Infrastructure.DAL
                 var users = new List<User>
                 {
                     new User(
-                        new UserId(Guid.NewGuid()),
-                        new Email("john.doe@example.com"),
-                        new Username("johndoe"),
-                        new Password("password1"),
-                        new FullName("John Doe"),
-                        new Role("User"),
+                        Guid.NewGuid(),
+                        "john.doe@example.com",
+                        "johndoe",
+                        "password1",
+                        "John Doe",
+                        "User",
                         DateTime.UtcNow
                     ),
                     new User(
-                        new UserId(Guid.NewGuid()),
-                        new Email("marry.lane@example.com"),
-                        new Username("merrylane"),
-                        new Password("password2"),
-                        new FullName("Marry Lane"),
-                        new Role("User"),
+                        Guid.NewGuid(),
+                        "marry.lane@example.com",
+                        "merrylane",
+                        "password2",
+                        "Marry Lane",
+                        "User",
                         DateTime.UtcNow
                     ),
                     new User(
-                        new UserId(Guid.NewGuid()),
-                        new Email("admin@example.com"),
-                        new Username("admin"),
-                        new Password("adminpassword"),
-                        new FullName("Administrator"),
-                        new Role("Admin"),
+                        Guid.NewGuid(),
+                        "admin@example.com",
+                        "admin",
+                        "adminpassword",
+                        "Administrator",
+                        "Admin",
                         DateTime.UtcNow
                     )
                 };

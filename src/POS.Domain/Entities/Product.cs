@@ -1,22 +1,21 @@
 using POS.Domain.Enums;
-using POS.Domain.ValueObjects;
 
 namespace POS.Domain.Entities;
 
 public class Product
 {
-    public ProductId Id { get; private set; }
-    public ProductName Name { get; private set; }
-    public ProductDescription Description { get; private set; }
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
     public ProductType Type { get; set; } = ProductType.Other; // Default value
-    public Vendor Vendor { get; private set; }
-    public ProductPrice Price { get; private set; }
-    public ProductQuantity Quantity { get; private set; }
+    public string Vendor { get; private set; }
+    public decimal Price { get; private set; }
+    public int Quantity { get; private set; }
     public string ImageUrl { get; set; }
     public int CategoryId { get; set; }
 
-    public Product(ProductId id, ProductName name, ProductDescription description, ProductType type,
-        Vendor vendor, ProductPrice price, ProductQuantity quantity, string imageUrl, int categoryId)
+    public Product(Guid id, string name, string description, ProductType type,
+        string vendor, decimal price, int quantity, string imageUrl, int categoryId)
     {
         Id = id;
         Name = name;

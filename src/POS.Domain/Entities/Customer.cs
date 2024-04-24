@@ -1,14 +1,12 @@
-using POS.Domain.ValueObjects;
-
 namespace POS.Domain.Entities;
 
 public class Customer
 {
-    public UserId CustomerId { get; private set; }
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
-    public Phone Phone { get; private set; }
-    public Address Address { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public string Phone { get; private set; }
+    public string Address { get; private set; }
 
     protected Customer()
     {

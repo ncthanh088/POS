@@ -8,6 +8,7 @@
 2. Update product
 3. Delete product
 
+
 ### User
 1. Sign in/ Sign up
 2. Authorize the payment request.
@@ -100,3 +101,5 @@ npx tailwindcss -i .\Styles\tailwind.css -o .\wwwroot\css\tailwind.css --watch
 
 debugging:
 https://stackoverflow.com/questions/73564523/blazor-hot-reload-debugging-using-vscode
+
+-- add QR code feature
