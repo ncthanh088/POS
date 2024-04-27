@@ -22,11 +22,13 @@ namespace POS.WebApp.Services
             {
                 throw new ApplicationException(content);
             }
-            var products = JsonSerializer.Deserialize<IEnumerable<Category>>(content, _options);
+            var categories = JsonSerializer.Deserialize<IEnumerable<Category>>(content, _options);
 
-            if (products is null)
+            if (categories is null)
+            {
                 return new List<Category> { };
-            return products;
+            }
+            return categories;
         }
     }
 }

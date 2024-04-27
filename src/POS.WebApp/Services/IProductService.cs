@@ -4,6 +4,6 @@ namespace POS.WebApp.Services
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetProductsAsync();
+        Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId);
     }
 }

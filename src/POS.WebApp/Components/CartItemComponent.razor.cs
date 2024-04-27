@@ -7,4 +7,7 @@ public partial class CartItemComponent
 {
     [Parameter]
     public Item Item { get; set; }
+
+    [Parameter]
+    public int ItemIndex { get; set; }
 }

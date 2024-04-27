@@ -1,0 +1,29 @@
+<article id="products">
+    <ul class="flex flex-wrap justify-start">
+        <hr class="border-gray-700 border-1 mt-2 mb-2 w-[95%]">
+        @if (Products?.Count() > 0)
+        {
+            @foreach (var product in Products)
+            {
+                <div style="background-color: @Category.Color" class="relative rounded-md min-h-28 min-w-28 m-1">
+                    <li class="absolute left-1 top-0 bottom-0 right-0 -bg--bg-black2 flex flex-col justify-between -text--grey items-start 
+                    rounded-tr-md rounded-br-md p-3 text-sm min-h-28 w-auto">
+                        <div>
+                            <h2 class="text-[0.5rem] -text--gray-light">Coffee &rarr; <span class="text-red-200">Sale</span></h2>
+                            <h3 class="text-[0.7rem] -text--white font-normal">@product.Name</h3>
+                            <h4 class="text-[0.6rem] -text--gray-light">$@product.Price</h4>
+                        </div>
+                        <InputCounter Product="product" />
+                    </li>
+                </div>
+            }
+        }
+        else
+        {
+            <h2 class="text-gray-400 text-sm mt-2">There are currently no products for sale.</h2>
+        }
+    </ul>
+</article>
+
+
+@* bg-hover == category-color *@

@@ -37,14 +37,14 @@ public partial class CartComponent
                 Quantity = 5,
             },
             new Item {
-                CartId = new Guid("83cc6fd5-3bee-4dfa-b4af-84f542c316ae"),
+                CartId = new Guid("69b6f521-7831-4809-8fe1-68efccad3800"),
                 Product = new Product {
-                    Id = new Guid("39a8ac40-7b84-46b4-b182-d9ac738de7a1"),
-                    Name = "Rice"
+                    Id = new Guid("3a133566-02ce-458f-ba27-f2141ec30614"),
+                    Name = "Coffee"
                 },
-                UnitPrice = 18.50M,
-                Quantity = 1,
-            },
+                UnitPrice = 10.06M,
+                Quantity = 9,
+            }
         };
     }
 }

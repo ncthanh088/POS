@@ -11,8 +11,8 @@ using POS.Infrastructure.DAL;
 namespace POS.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(POSDbContext))]
-    [Migration("20240418110142_add-categories-icon")]
-    partial class addcategoriesicon
+    [Migration("20240425160754_add-category-color")]
+    partial class addcategorycolor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,12 +23,13 @@ namespace POS.Infrastructure.DAL.Migrations
             modelBuilder.Entity("POS.Domain.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -41,6 +42,10 @@ namespace POS.Infrastructure.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Color")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
@@ -62,6 +67,7 @@ namespace POS.Infrastructure.DAL.Migrations
             modelBuilder.Entity("POS.Domain.Entities.Customer", b =>
                 {
                     b.Property<Guid>("CustomerId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Address")
@@ -119,7 +125,7 @@ namespace POS.Infrastructure.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("CartId")
+                    b.Property<Guid>("CartId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageUrl")
@@ -128,7 +134,7 @@ namespace POS.Infrastructure.DAL.Migrations
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProductName")
@@ -154,6 +160,7 @@ namespace POS.Infrastructure.DAL.Migrations
             modelBuilder.Entity("POS.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Currency")
@@ -163,10 +170,10 @@ namespace POS.Infrastructure.DAL.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal?>("TotalAmount")
+                    b.Property<decimal>("TotalAmount")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -177,6 +184,7 @@ namespace POS.Infrastructure.DAL.Migrations
             modelBuilder.Entity("POS.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CategoryId")
@@ -245,6 +253,7 @@ namespace POS.Infrastructure.DAL.Migrations
             modelBuilder.Entity("POS.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -289,7 +298,9 @@ namespace POS.Infrastructure.DAL.Migrations
                 {
                     b.HasOne("POS.Domain.Entities.Cart", "Cart")
                         .WithMany("Items")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("POS.Domain.Entities.Order", null)
                         .WithMany("Items")
@@ -297,7 +308,9 @@ namespace POS.Infrastructure.DAL.Migrations
 
                     b.HasOne("POS.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cart");
 

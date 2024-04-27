@@ -11,8 +11,16 @@ public partial class CategoryComponent
     [Inject]
     public ICategoriesService CategoriesService { get; set; }
 
+    [Parameter]
+    public EventCallback<Category> OnCategorySelected { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         Categories = await CategoriesService.GetCategoriesAsync();
+    }
+
+    public async Task GetProductByCategoryAsync(Category category)
+    {
+        await OnCategorySelected.InvokeAsync(category);
     }
 }

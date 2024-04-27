@@ -1,4 +1,7 @@
-﻿<div class="font-mono">
-    <p>@Item.Product.Name x @Item.Quantity</p>
-    <p>$@Item.UnitPrice</p>
+﻿<div class="flex flex-row justify-between -bg--bg-black2 rounded-md mb-1 text-sm p-2 hover:bg-gray-700">
+    <div class="flex flex-row justify-between">
+        <p>@ItemIndex.&nbsp;&nbsp;</p>
+        <p>@Item.Product.Name x @Item.Quantity</p>
+    </div>
+    <p>$@Item.TotalPrice</p>
 </div>

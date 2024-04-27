@@ -103,3 +103,19 @@ debugging:
 https://stackoverflow.com/questions/73564523/blazor-hot-reload-debugging-using-vscode
 
 -- add QR code feature
+-- TODO
+    + show category: done 
+    + show product by category
+    + add item to cart
+    + payment 
+    + select menu => show category
+    + 
+
+authorize/shift
+
+=> đăng nhập => shift 
+    1 shift => n users
+
+    khi sign => join to shift
+=> 
+

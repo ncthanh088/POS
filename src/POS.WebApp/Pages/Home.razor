@@ -2,7 +2,18 @@
 
 <PageTitle>Point Of Sale</PageTitle>
 
-<section>
-    <CategoryComponent />
-    <article id="products"></article>
+<section id="home-page" class="flex flex-row w-full mt-6 ml-2">
+    <article class="w-[70%] flex flex-col justify-start">
+        <div class="m-1">
+            <POS.WebApp.Components.SearchBar />
+        </div>
+        <CategoryComponent OnCategorySelected=@HandleShowProductsAsync />
+        @if (@Category != null)
+        {
+            <ProductComponent Category="@Category" />
+        }
+    </article>
+    <article class="w-[30%]">
+        <CartComponent />
+    </article>
 </section>

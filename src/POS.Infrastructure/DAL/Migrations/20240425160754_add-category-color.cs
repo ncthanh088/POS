@@ -5,13 +5,13 @@
 namespace POS.Infrastructure.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class addcategoriesicon : Migration
+    public partial class addcategorycolor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Icon",
+                name: "Color",
                 table: "Categories",
                 type: "TEXT",
                 maxLength: 255,
@@ -22,7 +22,7 @@ namespace POS.Infrastructure.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Icon",
+                name: "Color",
                 table: "Categories");
         }
     }
