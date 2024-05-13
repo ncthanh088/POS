@@ -32,7 +32,7 @@ public static class Extensions
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         // Try to apply the unit of work for the request handler.
-        services.AddScoped(typeof(IUnitOfWork<>), typeof(PostgresUnitOfWork<>));
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         services.TryDecorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkHandlerDecorator<,>));
 
         // EF Core + Npsql issue
@@ -52,12 +52,15 @@ public static class Extensions
             x.UseSqlite(sqliteOptions.ConnectionString);
         });
 
-        // Add repositories
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
         // Try to apply the unit of work for the request handler.
-        services.AddScoped(typeof(IUnitOfWork<>), typeof(PostgresUnitOfWork<>));
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         services.TryDecorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkHandlerDecorator<,>));
+
+        // Add Repositories
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<ILineItemRepository, LineItemRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
     }

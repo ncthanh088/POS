@@ -18,3 +18,13 @@
         </ul> *@
     </section>
 </nav>
+
+@code {
+    [Parameter]
+    public IEnumerable<string> MenuItems { get; set; }
+
+    protected override void OnInitialized()
+    {
+        MenuItems = ["Menu", "Reservation", "Chat", "Dashboard", "Accounting", "Settings"];
+    }
+}

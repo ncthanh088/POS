@@ -1,19 +1,32 @@
-﻿@page "/"
+﻿@attribute [Authorize]
+@page "/"
 
 <PageTitle>Point Of Sale</PageTitle>
 
-<section id="home-page" class="flex flex-row w-full mt-6 ml-2">
-    <article class="w-[70%] flex flex-col justify-start">
-        <div class="m-1">
-            <POS.WebApp.Components.SearchBar />
-        </div>
-        <CategoryComponent OnCategorySelected=@HandleShowProductsAsync />
+<section id="home-page" class="flex flex-row w-full pt-6 pl-2 pr-2">
+    <article class="flex flex-col justify-start md:w-3/4 sm:w-[100%]">
+        <POS.WebApp.Components.SearchBar />
+        <CategoriesComponent OnCategorySelected=@HandleShowProductsAsync />
         @if (@Category != null)
         {
-            <ProductComponent Category="@Category" />
+            <ProductsComponent Category="@Category" />
         }
     </article>
-    <article class="w-[30%]">
+    <article class="sm:fixed sm:-right-48 md:w-1/4 sm:w-52 md:relative md:right-0 ">
         <CartComponent />
     </article>
 </section>
+
+
+@code
+{
+    [Parameter]
+    public bool IsShowProducts { get; set; } = false;
+
+    public Category Category { get; set; }
+
+    public void HandleShowProductsAsync(Category category)
+    {
+        Category = category;
+    }
+}

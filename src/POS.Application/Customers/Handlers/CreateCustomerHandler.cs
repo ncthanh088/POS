@@ -9,15 +9,11 @@ internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Gu
 {
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<Customer> _customerRepository;
-    private readonly IRepository<Cart> _cartRepository;
 
-    public CreateCustomerHandler(IRepository<User> userRepository,
-                                 IRepository<Customer> customerRepository,
-                                 IRepository<Cart> cartRepository)
+    public CreateCustomerHandler(IRepository<User> userRepository, IRepository<Customer> customerRepository)
     {
         _userRepository = userRepository;
         _customerRepository = customerRepository;
-        _cartRepository = cartRepository;
     }
 
     public async Task<Guid> Handle(CreateCustomer request, CancellationToken cancellationToken)
@@ -39,9 +35,6 @@ internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Gu
         {
             throw new CustomerAlreadyExistsException(customerId);
         }
-
-        var cart = new Cart(user.Id);
-        await _cartRepository.AddAsync(cart);
 
         var customer = new Customer(customerId, request.FirstName, request.LastName, request.Phone, request.Address);
         await _customerRepository.AddAsync(customer);

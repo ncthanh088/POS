@@ -27,7 +27,6 @@ namespace POS.Infrastructure
             // services.AddPostgres(configuration);
             services.AddSQLites(configuration);
             services.AddScoped<IDataGenerator, DataGenerator>();
-            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IPosUtility, PosUtility>();
             services.AddSecurity();
             services.AddAuth(configuration);

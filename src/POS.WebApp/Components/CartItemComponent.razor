@@ -1,7 +1,16 @@
-﻿<div class="flex flex-row justify-between -bg--bg-black2 rounded-md mb-1 text-sm p-2 hover:bg-gray-700">
+﻿<div class="flex flex-row justify-between -bg--bg-black2 rounded-md mb-1 text-xs p-2 hover:bg-gray-700">
     <div class="flex flex-row justify-between">
-        <p>@ItemIndex.&nbsp;&nbsp;</p>
-        <p>@Item.Product.Name x @Item.Quantity</p>
+        <p>@ItemIndex. &nbsp;&nbsp;</p>
+        <p>@CartItem.Name x @CartItem.Quantity</p>
     </div>
-    <p>$@Item.TotalPrice</p>
+    <p>$@CartItem.TotalPrice</p>
 </div>
+
+
+@code {
+    [Parameter]
+    public int ItemIndex { get; set; }
+
+    [Parameter]
+    public Item CartItem { get; set; }
+}

@@ -4,11 +4,11 @@ using POS.Application.Repositories;
 
 namespace POS.Infrastructure.DAL
 {
-    public class CategoriesRepository : ICategoriesRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly POSDbContext _dbContext;
 
-        public CategoriesRepository(POSDbContext dbContext)
+        public CategoryRepository(POSDbContext dbContext)
         {
             _dbContext = dbContext;
         }

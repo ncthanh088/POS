@@ -3,7 +3,28 @@
 @tailwind utilities;
 
 #categories ul li svg {
-    width: 1rem;
-    height: 1rem;
-    fill: var(--bg-black2);
+  width: 1rem;
+  height: 1rem;
+  fill: var(--bg-black2);
+}
+
+/* Tạo thanh mảnh nhỏ */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+/* Tạo điểm đen chạy trên thanh cuộn */
+::-webkit-scrollbar-thumb {
+  background-color: #0d3120;
+}
+
+/* Tạo thanh mảnh nhỏ */
+::-webkit-scrollbar-track {
+  background-color: #1a3b17;
+}
+
+/* Tạo điểm đen chạy trên thanh cuộn khi cuộn */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }

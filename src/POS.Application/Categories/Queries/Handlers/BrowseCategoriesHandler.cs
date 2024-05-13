@@ -8,10 +8,10 @@ namespace POS.Application.Categories.Queries.Handlers;
 
 public class BrowseCategoriesHandler : IRequestHandler<BrowseCategories, IEnumerable<CategoryDTO>>
 {
-    private readonly ICategoriesRepository _categoriesRepository;
+    private readonly ICategoryRepository _categoriesRepository;
     private readonly IPosUtility _utility;
 
-    public BrowseCategoriesHandler(ICategoriesRepository categoriesRepository, IPosUtility utility)
+    public BrowseCategoriesHandler(ICategoryRepository categoriesRepository, IPosUtility utility)
     {
         _categoriesRepository = categoriesRepository;
         _utility = utility;

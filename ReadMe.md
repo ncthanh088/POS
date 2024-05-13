@@ -25,6 +25,10 @@
     => ...
 
 4. Payment: Tender (Cash/Visa/Momo)
+    - addItems to cart
+    - select tender => confirm
+    - send yêu cầu thanh toán 
+    - xử lý thanh toán
     
 5. Shipping 
 
@@ -119,3 +123,110 @@ authorize/shift
     khi sign => join to shift
 => 
 
+làm màn hình đăng nhập
+=> implement chức năng đăng nhập
+=> save thông tin claim user vào front end
+=> sử dụng để call api add item to card 
+=> 
+
+Để hosting ứng dụng ASP.NET Core API backend và Blazor WebAssembly frontend, bạn có thể sử dụng Docker để container hóa ứng dụng và sau đó deploy lên một dịch vụ hosting phù hợp. Dưới đây là các bước cơ bản:
+
+1. Tạo Dockerfile cho ASP.NET Core API và Blazor WebAssembly
+Dockerfile cho Backend (ASP.NET Core API):
+
+FROM mcr.microsoft.com/dotnet/aspnet:latest AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build
+WORKDIR /src
+COPY ["MyApi/MyApi.csproj", "MyApi/"]
+RUN dotnet restore "MyApi/MyApi.csproj"
+COPY . .
+WORKDIR "/src/MyApi"
+RUN dotnet build "MyApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "MyApi.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "MyApi.dll"]
+Dockerfile cho Frontend (Blazor WebAssembly):
+Copy
+Insert
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build
+WORKDIR /source
+
+# Copy csproj and restore as distinct layers
+COPY ["MyBlazorApp/MyBlazorApp.csproj", "MyBlazorApp/"]
+RUN dotnet restore "MyBlazorApp/MyBlazorApp.csproj"
+
+# Copy everything else and build
+COPY . .
+WORKDIR "/source/MyBlazorApp"
+RUN dotnet publish -c Release -o /app --no-restore
+
+# Final stage/image
+FROM nginx:alpine
+WORKDIR /var/www/web
+COPY --from=build /app .
+COPY nginx.conf /etc/nginx/nginx.conf
+2. Build và Push Docker Images lên Docker Registry
+Build image cho backend:
+Copy
+Insert
+docker build -t myapi:latest -f Dockerfile.api .
+docker tag myapi:latest mydockerhubusername/myapi:latest
+docker push mydockerhubusername/myapi:latest
+Build image cho frontend:
+docker build -t myblazorapp:latest -f Dockerfile.blazor .
+docker tag myblazorapp:latest mydockerhubusername/myblazorapp:latest
+docker push mydockerhubusername/myblazorapp:latest
+3. Deploy lên Cloud Service hoặc Server
+Bạn có thể deploy lên các dịch vụ như AWS, Azure, Google Cloud, hoặc một VPS.
+
+4. Cấu hình Domain và Hosting
+Mua domain từ nhà cung cấp domain.
+Cấu hình DNS để trỏ domain về địa chỉ IP của server hoặc dịch vụ cloud.
+Cấu hình SSL/TLS nếu cần cho kết nối an toàn.
+5. Sử dụng Docker Compose hoặc Kubernetes
+Nếu bạn muốn quản lý cả backend và frontend trên cùng một hệ thống, bạn có thể sử dụng docker-compose hoặc Kubernetes để orchestrate containers.
+
+6. Cập nhật và Quản lý phiên bản
+Định kỳ update images và containers.
+Quản lý phiên bản dự án của bạn thông qua tags trên Docker images.
+Lưu ý:
+Đảm bảo bạn kiểm tra cấu hình bảo mật cho ứng dụng và containers.
+Đối với Blazor WebAssembly, bạn có thể cần cấu hình reverse proxy để phục vụ các file tĩnh một cách hiệu quả.
+Nhớ cấu hình CORS trên ASP.NET Core backend để cho phép truy cập từ Blazor frontend nếu chúng được host trên domain khác nhau.
+Deploy ứng dụng lên môi trường production đôi khi có thể phức tạp, vì vậy đây chỉ là hướng dẫn cơ bản. Bạn có thể cần tìm hiểu thêm hoặc nhờ sự giúp đỡ từ cộng đồng hoặc các chuyên
+
+
+
+task: blazor sate management
+- blazor wasm
+- ProductsComponent: hiển thị danh sách sản phẩm (product_name, product_id,.. quantity, price)
+- ItemCartInputComponent: là child component của productsComponent, hiển thị số lượng sản phẩm
+đang được thêm vào cartComponent, ItemCartInputComponent có 2 button IncreaseCartItemQuantity  và deIncreaseCartItemQuantity
+và 1 thẻ input để hiển thị số lượng cartItem 
+- CartComponent: hiển thị danh sách cartItem được thêm vào sau khi chọn tăng hoặc giảm số lượng ở  ItemCartInputComponent
+
+dựa vào description ở trên hãy giúp tôi implement tính năng thêm sản phẩm vào giỏ hàng
+sản phẩm sau khi được thêm vào cart sẽ lưu ở localstorage trong cartComponent
+lưu lý khi thêm thì sẽ dùng IncreaseCartItemQuantity để thêm sản phẩm
+nên cần đồng bộ số lượng của mỗi cartItem ở ItemCartInputComponent ở thẻ input và item quantity trong CartComponent
+
+
+
+
+-config lai database
+=> khóa chính tự tăng . ef core
+=> item => categories như cũ
+
+=> DTO vs query 
+=> apply bussiness  payment process.
+
+=> lược bớt phần workstation, => quản lý theo user đăng nhập

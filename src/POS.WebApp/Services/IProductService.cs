@@ -1,9 +1,10 @@
 using POS.WebApp.Models;
 
-namespace POS.WebApp.Services
+namespace POS.WebApp.Services;
+
+public interface IProductService
 {
-    public interface IProductService
-    {
-        Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId);
-    }
+    Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId);
+    Task<Product> GetProductAsync(Guid productId);
+    event Action OnChange;
 }

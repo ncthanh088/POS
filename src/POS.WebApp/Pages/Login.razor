@@ -1,8 +1,62 @@
 @page "/login"
 
-<section>
-    <ShiftComponent />
-</section>
-<section>
+@inject HttpClient HttpClient
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject IConfiguration Configuration
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
-</section>
+
+<div class="flex flex-row w-full justify-center">
+    <section class="text-white">
+        <h3 class="">Login</h3>
+
+        <EditForm class="flex flex-col" Model="signInRequest" OnSubmit="HandleLogin">
+            <label for="username">Name</label>
+            <InputText class="text-black" id="username" @bind-Value="signInRequest.Email" />
+            <label for="password">Password</label>
+            <InputText class="text-black" id="password" @bind-Value="signInRequest.Password" type="password" />
+            <div class="flex justify-center items-center w-full">
+                <button type="submit" class="rounded-md text-sm p-3 bg-green-600 w-1/2 hover:bg-green-700 mt-2">
+                    Sign In</button>
+            </div>
+        </EditForm>
+
+    </section>
+
+    <section>
+        <ShiftComponent />
+    </section>
+    <section id="pin-code">
+        <div>
+            <div class="flex flex-col justify-center items-center mt-4 pl-4 pr-4 mr-2 ml-2">
+                <label for="pin" class="text-gray-400 text-sm pb-2 mb-2">Enter your PIN</label>
+                <ul class="flex flex-row justify-center items-center">
+                    <li class="h-2.5 w-2.5 m-2 rounded-full bg-white"></li>
+                    <li class="h-2.5 w-2.5 m-2 rounded-full bg-white"></li>
+                    <li class="h-2.5 w-2.5 m-2 rounded-full bg-white"></li>
+                    <li class="h-2.5 w-2.5 m-2 rounded-full bg-white"></li>
+                </ul>
+            </div>
+        </div>
+
+        <NumbericKeyPad />
+    </section>
+</div>
+
+
+@code {
+    private SignInRequest signInRequest = new();
+
+    private async Task HandleLogin()
+    {
+        var jwt = await AuthService.SignIn(signInRequest.Email, signInRequest.Password);
+        await LocalStorage.SetItemAsync("token", jwt.AccessToken);
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

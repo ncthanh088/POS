@@ -1,7 +1,13 @@
-﻿<div id="cart" class="flex flex-col text-gray-300 size-4 justify-start h-full w-full">
+﻿@inject ICartService CartService
+@inject IOrderService OrderService
+@inject IAuthService AuthService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@implements IDisposable
+
+<div id="cart" class="flex flex-col text-gray-300 size-4 justify-start h-full w-full text-xs">
     <div class="flex justify-between mb-3">
-        <label class="text-sm text-white text-mono" for="order">Order: 23239045895</label>
-        <button>
+        <h1 class="text-xs">Cart</h1>
+        <button @onclick="() =>  CartService.EmptyCart()">
             <svg xmlns="http://www.w3.org/2000/svg" class="-fill--grey w-[0.853rem] h-[0.853rem]" viewBox="0 0 512 512">
                 <path
                     d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z" />
@@ -10,46 +16,59 @@
     </div>
 
     <section id="list-item" class="mb-2 h-[40%] overflow-y-auto">
-        <ul class="max-h-[200px]">
-            @for (int i = 0; i < Items.Count(); i++)
-            {
-                int index = i + 1;
-                <li>
-                    <CartItemComponent ItemIndex="index" Item=@Items.ElementAt(i) />
-                </li>
-            }
-        </ul>
+        @if (items.Any())
+        {
+            <ul class="max-h-[200px]">
+                @for (int i = 0; i < items?.Count(); i++)
+                {
+                    var item = items.ElementAt(i);
+                    int index = i + 1;
+                    <li>
+                        <CartItemComponent ItemIndex="index" CartItem="item" />
+                    </li>
+                }
+            </ul>
+
+        }
+        else
+        {
+            <div id="empty-cart-items" class="flex justify-center items-center h-full">
+                <p class="text-xs">Empty cart</p>
+            </div>
+        }
     </section>
 
     <section id="recipe" class="flex flex-col justify-between h-[60%] -bg--bg-black2 rounded-md mb-4">
         <ul id="Discount" class="mb-2 mt-3 p-3 rounded-md">
             <li class="flex flex-wrap justify-between text-sm mb-2">
-                <label class="text-sm">Subtotal</label>
-                <span>$0.00</span>
+                <label class="text-xs">Subtotal</label>
+                <span class="text-xs">$0.00</span>
             </li>
             <li class="flex flex-wrap justify-between text-sm mb-2">
-                <label class="text-sm">Discount</label>
-                <span>N/A</span>
+                <label class="text-xs">Discount</label>
+                <span class="text-xs">N/A</span>
             </li>
             <li class="flex flex-wrap justify-between text-sm mb-2">
-                <label class="text-sm">VAT</label>
-                <span>$0.00</span>
+                <label class="text-xs">VAT</label>
+
+                <span class="text-xs">$0.00</span>
             </li>
             <hr class="border-gray-600 mt-2 mb-2">
             <li class="flex flex-wrap justify-between text-sm mb-2">
                 <label for="total">Total</label>
-                <span>$0.00</span>
+                <span class="text-xs">$0.00</span>
             </li>
         </ul>
 
-        <div id="payment" class="rounded-md ">
-            <label class="text-sm p-3">Payment method</label>
+        <div id="payment" class="rounded-md">
+            <label class="text-xs p-3">Payment method</label>
             <div class="flex flex-row justify-center items-center mt-1 text-sm">
                 <button
-                    class="p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Cash</button>
-                <button class="p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Credit
+                    class="text-xs p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Cash</button>
+                <button
+                    class="text-xs p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Credit
                     Card</button>
-                <button class="p-[0.6rem] m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">
+                <button class="p-[0.7rem] m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-200 h-[0.875rem] w-[0.875rem]"
                         viewBox="0 0 448 512">
                         <path
@@ -57,8 +76,65 @@
                     </svg>
                 </button>
             </div>
-            <button class="bg-gray-50 text-gray-700 rounded-[1.2rem] pt-2 pb-2 pr-2 pl-2 w-[90%] m-4 text-sm">Place
+            <button @onclick="() => PlaceOrder()"
+                class="bg-gray-200 text-gray-700 rounded-[1rem] pt-2 pb-2 pr-2 pl-2 mt-2 m-4 w-[90%] text-sm hover:bg-gray-300">Place
                 Order</button>
         </div>
     </section>
 </div>
+
+@code {
+    private bool orderPlaced = false;
+    private IEnumerable<Item> items { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await CartService.GetCartItemsAsync();
+        localStorage.Changed += HandleLocalStorageChanged;
+    }
+
+    public void Dispose()
+    {
+        localStorage.Changed -= HandleLocalStorageChanged;
+    }
+
+    private async void HandleLocalStorageChanged(object sender, ChangedEventArgs e)
+    {
+        if (e.Key == "cart")
+        {
+            items = await CartService.GetCartItemsAsync();
+            StateHasChanged();
+        }
+    }
+
+    private async Task RemoveCartItemsAsync(Item item)
+    {
+        await CartService.RemoveCartItemAsync(item);
+        items = await CartService.GetCartItemsAsync();
+    }
+
+    private async Task PlaceOrder()
+    {
+        orderPlaced = true;
+
+        var userInfo = await AuthService.GetUserInfoAsync();
+        if (userInfo != null)
+        {
+            // TODO:
+        }
+
+        var cartItems = await CartService.GetCartItemsAsync();
+        var request = new PlaceOrderRequest
+            {
+                UserId = userInfo.Id,
+                CustomerId = null,
+                Items = cartItems,
+                Status = OrderStatus.Pending,
+                CreatedDate = DateTime.UtcNow,
+            };
+
+        var order = await OrderService.PlaceOrderAsync(request);
+        await CartService.EmptyCart();
+        items = [];
+    }
+}

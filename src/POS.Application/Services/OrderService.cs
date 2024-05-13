@@ -16,9 +16,7 @@ namespace POS.Application.Services
         public async Task<bool> HasPendingOrderAsync(Guid userId)
         {
             return await _orderRepository
-                .AnyAsync(x => x.UserId == userId
-                    && x.Status == OrderStatus.Created
-                    || x.Status == OrderStatus.Approved);
+                .AnyAsync(x => x.UserId == userId && x.Status == OrderStatus.Pending);
         }
     }
 }

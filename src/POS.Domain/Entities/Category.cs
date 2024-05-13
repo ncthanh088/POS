@@ -8,7 +8,7 @@ namespace POS.Domain.Entities
         public string Icon { get; private set; }
         public string Color { get; private set; }
 
-        public List<Product> Products { get; set; }
+        public List<Item> Products { get; set; }
 
         public Category(int id, string name, string description, string icon, string color)
         {
