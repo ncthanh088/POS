@@ -1,0 +1,44 @@
+﻿<article id="categories">
+    <ul class="grid grid-cols-4 gap-3 pr-6 py-3">
+        @if (Categories?.Count() > 0)
+        {
+            @foreach (var category in Categories)
+            {
+                <li style="background-color: @category.Color" class="flex flex-col justify-between font-normal -text--bg-black2 rounded-md 
+                    text-sm min-h-28 w-full p-3 hover:bg-gray-600" @onclick="() => GetItemsByCategoryAsync(category)">
+                    @((MarkupString)@category.Icon)
+                    <div class="flex-none mt-3">
+                        <h4>@category.Name</h4>
+                        <p class="text-xs">@category.Items.Count() items</p>
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <h1 class="text-white">Not found...</h1>
+        }
+    </ul>
+</article>
+
+
+@code
+{
+    public IEnumerable<Category> Categories { get; set; }
+
+    [Inject]
+    public ICategoriesService CategoriesService { get; set; }
+
+    [Parameter]
+    public EventCallback<Category> OnCategorySelected { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await CategoriesService.GetCategoriesAsync();
+    }
+
+    public async Task GetItemsByCategoryAsync(Category category)
+    {
+        await OnCategorySelected.InvokeAsync(category);
+    }
+}

@@ -1,0 +1,55 @@
+﻿@attribute [Authorize]
+@inject AppState AppState
+@page "/"
+@using System.ComponentModel
+
+<PageTitle>Point Of Sale</PageTitle>
+
+<section id="home-page" class="flex flex-row w-full pt-6 px-2">
+    <article class="flex flex-col justify-start md:w-2/3 sm:w-[100%]">
+        <POS.MultiApp.Components.SearchBar />
+        <CategoriesComponent OnCategorySelected=@HandleShowItemsAsync />
+        @if (@Category != null)
+        {
+            <ItemsComponent Category="@Category" />
+        }
+    </article>
+    <article class="sm:fixed sm:-right-48 md:w-1/3 sm:w-52 md:relative md:right-0 ">
+        @if (AppState.Receipt != null)
+        {
+            <ReceiptComponent Receipt="@AppState.Receipt" />
+        }
+        else
+        {
+            <CartComponent />
+        }
+    </article>
+</section>
+
+
+@code
+{
+    [Parameter]
+    public bool IsShowItems { get; set; } = false;
+
+    public Category Category { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        AppState.PropertyChanged += HandleReceiptChanged;
+        return Task.CompletedTask;
+    }
+
+    private void HandleReceiptChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(AppState.Receipt))
+        {
+            StateHasChanged();
+        }
+    }
+
+    public void HandleShowItemsAsync(Category category)
+    {
+        Category = category;
+    }
+}

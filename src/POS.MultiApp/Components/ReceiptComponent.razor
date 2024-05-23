@@ -1,0 +1,118 @@
+@inject IJSRuntime JSRuntime
+@inject AppState AppState
+@inject Utility Utility
+
+@if (Receipt != null)
+{
+    <div class="flex flex-col justify-between p-4 bg-orange-50 rounded-sm h-full">
+        <div class="">
+            <div class="flex flex-col items-center justify-center text-lg">
+                <p>*** Retail Receipt ***</p>
+                <p class="text-sm">@Receipt.StoreName</p>
+            </div>
+            <div class="flex justify-between mt-2">
+                <div class="text-xs">
+                    Tel:+1 (650) 091-3277<br>
+                    Website: http://www.pos.service.com
+                </div>
+            </div>
+            <div class="">
+                <div class="flex justify-between">
+                    <div class="flex flex-row">
+                        <p class="text-xs  pr-1">Receipt:</p>
+                        <p class="text-xs">650232610003</p>
+                    </div>
+                    <div class="flex flex-row">
+                        <p class="text-xs  pr-1">Date:</p>
+                        <p class="text-xs">06/05/2020,20:46:52</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-row justify-start">
+                    <p class="text-xs  pr-1">Operator:</p>
+                    <p class="text-xs">Mitchell Admin</p>
+                </div>
+
+                <div class="flex flex-row justify-start">
+                    <p class="text-xs  pr-1">Customer:</p>
+                    <p class="text-xs">Nicole Ford</p>
+                </div>
+
+                <div class="mt-2">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-xs font-normal">No.</th>
+                                <th class="text-xs font-normal">Item</th>
+                                <th class="text-xs font-normal">Unit Price</th>
+                                <th class="text-xs font-normal">Qty</th>
+                                <th class="text-xs font-normal">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-t-2 border-dotted border-gray-500 space-y-4">
+                            <tr>
+                                <td class="py-1 text-xs ">1.</td>
+                                <td class="py-1 text-xs ">Conference Chair</td>
+                                <td class="py-1 text-xs text-right">16.50</td>
+                                <td class="py-1 text-xs text-center">1</td>
+                                <td class="py-1 text-xs text-right">16.50</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1 text-xs ">2.</td>
+                                <td class="py-1 text-xs">Customizable Desk</td>
+                                <td class="py-1 text-xs text-right">750.00</td>
+                                <td class="py-1 text-xs text-center">4</td>
+                                <td class="py-1 text-xs text-right">690.00</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1 text-xs ">3.</td>
+                                <td class="py-1 text-xs">Large Cabinet</td>
+                                <td class="py-1 text-xs text-right">320.00</td>
+                                <td class="py-1 text-xs text-center">1</td>
+                                <td class="py-1 text-xs text-right">320.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="border-t-2 border-dotted border-gray-500">
+                            <tr>
+                                <td colspan="4" class="text-xs text-right">SubTotal:</td>
+                                <td class="text-xs text-right">780.5</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-xs text-right">Discount:</td>
+                                <td class="text-xs text-right">20</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-xs text-right">VAT:</td>
+                                <td class="text-xs text-right">120.5</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-xs text-right">Total:</td>
+                                <td class="text-xs text-right">1026.5</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="QRCode" class="flex flex-col items-center justify-center p-2">
+            <p class="text-xs">Thank you and see you soon</p>
+            <p class="text-xs">Together we can go further!</p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Receipt Receipt { get; set; }
+
+    protected override void OnInitialized()
+    {
+        @* Utility.GenerateBarcode("650232610003", "QRCode"); *@
+    }
+
+    private async Task PrintAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("print");
+    }
+
+}

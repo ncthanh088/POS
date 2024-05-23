@@ -1,0 +1,32 @@
+﻿@inject ICartService CartService
+@inject AppState AppState
+
+
+<div @onclick="() => OpenDialog(CartItem)"
+    class="flex flex-row justify-between -bg--bg-black2 rounded-md mb-1 text-xs p-3 hover:bg-gray-700">
+    <div class="flex flex-row justify-between">
+        <p>@ItemIndex. &nbsp;&nbsp;</p>
+        <p>@CartItem.Name x @CartItem.Quantity</p>
+    </div>
+    <p>$@CartItem.ActualUnitPrice</p>
+</div>
+
+
+@code {
+    [Parameter]
+    public int ItemIndex { get; set; }
+
+    [Parameter]
+    public CartItem CartItem { get; set; }
+    private void RemoveCartItem()
+    {
+        Console.WriteLine("Removing item");
+    }
+
+    private void OpenDialog(CartItem item)
+    {
+        Console.WriteLine("Openinfdfdg diafdflewefdewewfog");
+        AppState.SelectedItem = item;
+        StateHasChanged();
+    }
+}

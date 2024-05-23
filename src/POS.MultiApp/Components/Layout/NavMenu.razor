@@ -1,0 +1,30 @@
+﻿<nav class="w-full px-3 py-2">
+    <section id="navbar">
+        <ul class="list-none">
+            @foreach (var item in MenuItems)
+            {
+                <li class="-bg--black hover:-bg--bg-black2 text-gray-400 white p-[12px]
+                 rounded-[4px] text-left mt-1 text-xs">@item</li>
+            }
+        </ul>
+
+    </section>
+
+    <section class="shift">
+        @* <ul>
+        <li><a href="#profile">Leslee K.</a></li>
+        <li><a href="#profile">Alex Hwoang.</a></li>
+        <li><a href="#profile">Marry Jane.</a></li>
+        </ul> *@
+    </section>
+</nav>
+
+@code {
+    [Parameter]
+    public IEnumerable<string> MenuItems { get; set; }
+
+    protected override void OnInitialized()
+    {
+        MenuItems = ["Menu", "Reservation", "Chat", "Dashboard", "Accounting", "Settings"];
+    }
+}

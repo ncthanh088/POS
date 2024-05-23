@@ -1,0 +1,76 @@
+@inject IItemService ItemService
+@inject ICartService CartService
+
+<article id="products">
+    <div class=" px-6">
+        <hr class="border-gray-700 border-1 w-full">
+    </div>
+    <ul class="grid grid-cols-4 gap-3 pr-6 py-3">
+        @if (items?.Count() > 0)
+        {
+            @foreach (var item in items)
+            {
+                var cartItem = new CartItem
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        UnitPrice = item.Price,
+                        ItemId = item.Id,
+                    };
+                var backgroundSize = cartItem.Quantity > 0 ? "" : "3%";
+                <div class="relative rounded-md min-h-28 w-full overflow-hidden -bg--bg-black2 text-gray-300">
+                    <div class="absolute h-full top-0 left-0"
+                         style="background-color: @Category.Color; width: @backgroundSize;">
+                    </div>
+                    <div class="p-3 flex flex-col justify-between  items-start text-sm min-h-28 w-auto z-1">
+                        <div>
+                            <h2 class="text-[0.5rem]">
+                                @Category.Name &rarr;
+                                <span>Sale</span>
+                            </h2>
+                            <h3 class="text-[0.7rem]  font-normal">@cartItem.Name</h3>
+                            <h4 class="text-[0.6rem]">$@cartItem.UnitPrice</h4>
+                        </div>
+                        <div class="w-full flex justify-end -text--grey">
+                            <AddCartItemComponent CartItem="cartItem" OnQuantityChanged="HandleQuantityChanged" />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h2 class="text-gray-400 text-sm mt-2">There are currently no products for sale.</h2>
+        }
+    </ul>
+</article>
+
+
+@code {
+
+    [Parameter]
+    public Category Category { get; set; }
+    private IEnumerable<Item> items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await ItemService.GetItemsByCategoryIdAsync(Category.Id);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        items = await ItemService.GetItemsByCategoryIdAsync(Category.Id);
+    }
+
+    protected override void OnInitialized()
+    {
+        ItemService.OnChange += StateHasChanged;
+    }
+
+    private Task HandleQuantityChanged(CartItem cartItem)
+    {
+    // TODO: Sync background color with item Quantity.
+        @* style="background-color: @Category.Color; width: @(quantity > 0 ? "100%" : "3%") *@
+        return Task.CompletedTask;
+    }
+}
