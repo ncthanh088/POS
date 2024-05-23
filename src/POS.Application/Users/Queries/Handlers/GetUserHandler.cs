@@ -8,23 +8,22 @@ namespace POS.Application.Users.Queries.Handlers;
 
 internal sealed class GetUserHandler : IRequestHandler<GetUser, UserDto>
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public GetUserHandler(IRepository<User> userRepository)
+    public GetUserHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
 
     public async Task<UserDto> Handle(GetUser request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindAsync(x => x.Id == request.UserId);
+        var user = await _userRepository.GetUserAsync(request.UserId);
 
         if (user is null)
         {
             throw new UserNotFoundException(request.UserId);
         }
 
-        return user.AsDto();
-
+        return user;
     }
 }

@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "POS-Service",
+      "name": "pos-api",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -10,6 +10,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/src/POS.Api",
       "stopAtEntry": false,
+      "justMyCode": false,
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -18,11 +19,11 @@
       }
     },
     {
-      "name": "POS-Agent",
+      "name": "pos-ui",
       "type": "coreclr",
       "request": "launch",
-      //"cwd": "${workspaceFolder}/src/POS.WebApp",
-      "preLaunchTask": "build", // Ensure we don't watch an unbuilt site
+      "cwd": "${workspaceFolder}/src/POS.WebApp",
+      "preLaunchTask": "build",
       "program": "dotnet",
       "stopAtEntry": false,
       "serverReadyAction": {
@@ -35,8 +36,8 @@
       "args": [
         "watch",
         "--project",
-        "${workspaceFolder}/src/POS.WebApp/POS.WebApp.csproj", // Give .csproj file path relative to workspace root
-        "--verbose" // Let's us confirm browser connects with hot reload capabilities
+        "${workspaceFolder}/src/POS.WebApp/POS.WebApp.csproj",
+        "--verbose"
       ],
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
@@ -52,8 +53,8 @@
     {
       "name": "POS-Debugger",
       "configurations": [
-        "POS-Service",
-        "POS-Agent"
+        "pos-api",
+        "pos-ui"
       ],
       "stopAll": true
     }

@@ -29,7 +29,7 @@ internal sealed class Authenticator : IAuthenticator
                 SecurityAlgorithms.HmacSha256);
     }
 
-    public JwtDto CreateToken(Guid userId, string role)
+    public JwtDto CreateToken(int userId, string role)
     {
         var claims = new List<Claim>
         {

@@ -4,6 +4,6 @@ namespace POS.Application.Security
 {
     public interface IAuthenticator
     {
-        JwtDto CreateToken(Guid userId, string role);
+        JwtDto CreateToken(int userId, string role);
     }
 }

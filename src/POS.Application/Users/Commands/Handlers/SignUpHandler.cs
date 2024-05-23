@@ -37,14 +37,15 @@ namespace POS.Application.Users.Commands.Handlers
             }
 
             var securedPassword = _passwordManager.Secure(request.Password);
-            var user = new User(request.UserId,
-                                request.Email,
-                                request.Username,
-                                securedPassword,
-                                request.FullName,
-                                role,
-                                _clock.Current());
-
+            var user = new User
+            {
+                Email = request.Email,
+                Username = request.Username,
+                Password = securedPassword,
+                FullName = request.FullName,
+                Role = role,
+                CreatedAt = _clock.Current(),
+            };
             await _userRepository.AddAsync(user);
 
             return Unit.Value;

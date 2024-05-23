@@ -6,7 +6,7 @@ using POS.Application.Utility;
 
 namespace POS.Application.Categories.Queries.Handlers;
 
-public class BrowseCategoriesHandler : IRequestHandler<BrowseCategories, IEnumerable<CategoryDTO>>
+public class BrowseCategoriesHandler : IRequestHandler<BrowseCategories, IEnumerable<CategoryDto>>
 {
     private readonly ICategoryRepository _categoriesRepository;
     private readonly IPosUtility _utility;
@@ -17,7 +17,7 @@ public class BrowseCategoriesHandler : IRequestHandler<BrowseCategories, IEnumer
         _utility = utility;
     }
 
-    public async Task<IEnumerable<CategoryDTO>> Handle(BrowseCategories request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CategoryDto>> Handle(BrowseCategories request, CancellationToken cancellationToken)
     {
         var categories = await _categoriesRepository.GetCategoriesAsync();
 

@@ -4,8 +4,8 @@ namespace POS.Application.Exceptions;
 
 public class UserNotFoundException : GlobalException
 {
-    public Guid UserId { get; }
-    public UserNotFoundException(Guid userId) : base($"User: '{userId}' not found.")
+    public int UserId { get; }
+    public UserNotFoundException(int userId) : base($"User: '{userId}' not found.")
     {
         UserId = userId;
     }

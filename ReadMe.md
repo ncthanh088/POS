@@ -230,3 +230,27 @@ nên cần đồng bộ số lượng của mỗi cartItem ở ItemCartInputComp
 => apply bussiness  payment process.
 
 => lược bớt phần workstation, => quản lý theo user đăng nhập
+
+
+=> add CartItem to Cart
+    => LookupItem
+        include { Tax, Discount }
+    => Call CalculatePaymentTransaction to calculate CartInfo
+        get SaleTransaction update ui
+    khi calculate trả về cờ IsCompletedTransaction thì call payment 
+    or khi user chọn placer Order thì complete transaction
+    => 
+
+    // khi ứng dụng lần đầu chạy call api để get config, tax, club langulage  vv
+
+    khi giỏ hàng có item thì cập nhật tạo transaction
+    => khi process payment xong thì xóa transaction nếu có trong localstorage
+    
+
+    => làm thế nào để chọn 1 item trong cart?
+    => chọn lấy model ứng với item đó
+    => mở popup model 
+    => load discounts on popup model by itemid
+    => selected discounts => add discount to cart item
+    => calculate cart
+    => submit sale transaciton.

@@ -4,5 +4,6 @@ public enum TenderType
 {
     Cash,
     CreditCart,
-    EWallet
+    EWallet,
+    Rounding,
 }

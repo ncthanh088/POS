@@ -1,4 +1,3 @@
-using POS.Domain.Entities;
 using POS.Application.DTO;
 using POS.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +16,10 @@ public class ItemRepository : IItemRepository
     public async Task<ItemDto> GetItemByIdAsync(int ItemId)
     {
         var item = await _dbContext.Items
-                            .Where(x => x.Id == ItemId && x.IsActived)
-                            .Select(x => new ItemDto
-                            {
-                                Id = x.Id,
-                                Name = x.Name,
-                                Description = x.Description,
-                                ImageUrl = x.ImageUrl,
-                                Vendor = x.Vendor,
-                                Price = x.Price,
-                                Quantity = x.Quantity,
-                                Type = Domain.Enums.ItemType.Other,
-                            }).FirstOrDefaultAsync();
+            .Where(x => x.Id == ItemId && x.IsActived)
+            .Include(x => x.Tax)
+            .Select(x => ItemDto.Parse(x))
+            .FirstOrDefaultAsync();
 
         return item;
     }
@@ -36,30 +27,31 @@ public class ItemRepository : IItemRepository
     public async Task<IEnumerable<ItemDto>> GetItemsByCategoryIdAsync(int categoryId)
     {
         var items = await _dbContext.Items
-                    .Where(x => x.CategoryID == categoryId && x.IsActived)
-                    .Select(x => new ItemDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Description = x.Description,
-                        ImageUrl = x.ImageUrl,
-                        Vendor = x.Vendor,
-                        Price = x.Price,
-                        Quantity = x.Quantity,
-                        Type = Domain.Enums.ItemType.Other,
-                    }).ToListAsync();
+            .Where(x => x.CategoryId == categoryId && x.IsActived)
+            .Select(x => ItemDto.Parse(x))
+            .ToListAsync();
 
         return items;
     }
 
     public async Task<IEnumerable<ItemDto>> GetItemsAsync()
     {
-        var items = await _dbContext.Items.Where(x => x.IsActived).ToListAsync();
-        return items.Select(x => x.AsDto());
+        var items = await _dbContext.Items
+            .Where(x => x.IsActived)
+            .Select(x => ItemDto.Parse(x))
+            .ToListAsync();
+
+        return items;
     }
 
-    public Task<IEnumerable<ItemDto>> GetCartItemsAsync(IEnumerable<int> itemIDs)
+    public async Task<IEnumerable<ItemDto>> GetCartItemsAsync(IEnumerable<int> itemIds)
     {
-        throw new NotImplementedException();
+        var cartItems = await _dbContext.Items
+            .Where(x => itemIds.Contains(x.Id) && x.IsActived)
+            .Include(x => x.Tax)
+            .Select(x => ItemDto.Parse(x))
+            .ToListAsync();
+
+        return cartItems;
     }
 }

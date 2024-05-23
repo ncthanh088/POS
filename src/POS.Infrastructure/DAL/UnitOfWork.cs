@@ -21,14 +21,11 @@ internal sealed class UnitOfWork<TResponse> : IUnitOfWork<TResponse>
     {
         try
         {
-            using (var transaction = new TransactionScope())
+            using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var response = await handler();
 
                 await _dbContext.SaveChangesAsync();
-
-                transaction.Complete();
-
                 return response;
             }
 

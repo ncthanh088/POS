@@ -2,8 +2,8 @@ using MediatR;
 
 namespace POS.Application.Customers;
 
-public sealed record CreateCustomer(Guid CustomerId,
+public sealed record CreateCustomer(int CustomerId,
                                     string FirstName,
                                     string LastName,
                                     string Phone,
-                                    string Address) : IRequest<Guid>;
+                                    string Address) : IRequest<int>;

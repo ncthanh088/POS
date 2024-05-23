@@ -61,6 +61,9 @@ public static class Extensions
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<ILineItemRepository, LineItemRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ITaxRepository, TaxRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ISaleTransactionRepository, SaleTransactionRepository>();
 
         return services;
     }

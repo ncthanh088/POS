@@ -1,8 +1,7 @@
-namespace POS.Domain.Enums
+namespace POS.Domain.Enums;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Sale,
-        Refund,
-    }
+    Sale,
+    Refund,
 }

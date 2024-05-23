@@ -4,6 +4,6 @@ namespace POS.Application.Repositories
 {
     public interface ICategoryRepository
     {
-        public Task<IEnumerable<CategoryDTO>> GetCategoriesAsync();
+        public Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
     }
 }

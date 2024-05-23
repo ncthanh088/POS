@@ -1,6 +1,6 @@
+using POS.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using POS.Infrastructure;
 
 namespace POS.Api.Controllers;
 

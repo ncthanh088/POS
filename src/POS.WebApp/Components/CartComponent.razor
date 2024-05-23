@@ -1,6 +1,6 @@
 ﻿@inject ICartService CartService
-@inject IOrderService OrderService
 @inject IAuthService AuthService
+@inject IPaymentService PaymentService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @implements IDisposable
 
@@ -15,13 +15,13 @@
         </button>
     </div>
 
-    <section id="list-item" class="mb-2 h-[40%] overflow-y-auto">
-        @if (items.Any())
+    <section id="list-item" class="mb-2 h-[50%] overflow-y-auto">
+        @if (_cartInfo?.CartItems != null && _cartInfo.CartItems.Count() != 0)
         {
             <ul class="max-h-[200px]">
-                @for (int i = 0; i < items?.Count(); i++)
+                @for (int i = 0; i < _cartInfo.CartItems.Count(); i++)
                 {
-                    var item = items.ElementAt(i);
+                    var item = _cartInfo.CartItems.ElementAt(i);
                     int index = i + 1;
                     <li>
                         <CartItemComponent ItemIndex="index" CartItem="item" />
@@ -38,32 +38,37 @@
         }
     </section>
 
-    <section id="recipe" class="flex flex-col justify-between h-[60%] -bg--bg-black2 rounded-md mb-4">
+    <section id="recipe" class="flex flex-col justify-between h-[50%] -bg--bg-black2 rounded-md mb-4">
         <ul id="Discount" class="mb-2 mt-3 p-3 rounded-md">
             <li class="flex flex-wrap justify-between text-sm mb-2">
                 <label class="text-xs">Subtotal</label>
-                <span class="text-xs">$0.00</span>
+                <span class="text-xs">$@_cartInfo?.SubTotal</span>
             </li>
             <li class="flex flex-wrap justify-between text-sm mb-2">
-                <label class="text-xs">Discount</label>
-                <span class="text-xs">N/A</span>
+                <label class="text-xs">Total discount</label>
+                <span class="text-xs">$@_cartInfo?.TotalDiscount</span>
             </li>
             <li class="flex flex-wrap justify-between text-sm mb-2">
                 <label class="text-xs">VAT</label>
 
-                <span class="text-xs">$0.00</span>
+                <span class="text-xs">$@_cartInfo?.TotalTax</span>
             </li>
             <hr class="border-gray-600 mt-2 mb-2">
             <li class="flex flex-wrap justify-between text-sm mb-2">
                 <label for="total">Total</label>
-                <span class="text-xs">$0.00</span>
+                <span class="text-xs">$@_cartInfo?.Total</span>
             </li>
         </ul>
 
         <div id="payment" class="rounded-md">
             <label class="text-xs p-3">Payment method</label>
             <div class="flex flex-row justify-center items-center mt-1 text-sm">
-                <button
+                <button @onclick="()=> SetPaymentMethod(new TransactionTender
+                                                        {   
+                                                            Type = TenderType.Cash,
+                                                            Amount=  _cartInfo.Total,
+                                                            SequenceNumber = 1
+                                                        })"
                     class="text-xs p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Cash</button>
                 <button
                     class="text-xs p-2 m-1 border-[1px] border-gray-600 hover:bg-gray-700 rounded-md -bg--bg-black2">Credit
@@ -76,7 +81,7 @@
                     </svg>
                 </button>
             </div>
-            <button @onclick="() => PlaceOrder()"
+            <button @onclick="()=> HandleProcessPaymentAsync()"
                 class="bg-gray-200 text-gray-700 rounded-[1rem] pt-2 pb-2 pr-2 pl-2 mt-2 m-4 w-[90%] text-sm hover:bg-gray-300">Place
                 Order</button>
         </div>
@@ -84,57 +89,54 @@
 </div>
 
 @code {
-    private bool orderPlaced = false;
-    private IEnumerable<Item> items { get; set; }
+    private CartInfo _cartInfo { get; set; } = new CartInfo();
 
     protected override async Task OnInitializedAsync()
     {
-        items = await CartService.GetCartItemsAsync();
-        localStorage.Changed += HandleLocalStorageChanged;
+        await CartService.PrepareCartInfoDataAsync();
+        _cartInfo = await CartService.GetCartInfoAsync();
+        localStorage.Changed += async (sender, e) => await HandleCartChangedAsync(sender, e);
     }
 
     public void Dispose()
     {
-        localStorage.Changed -= HandleLocalStorageChanged;
+        localStorage.Changed -= async (sender, e) => await HandleCartChangedAsync(sender, e);
     }
 
-    private async void HandleLocalStorageChanged(object sender, ChangedEventArgs e)
+    private async Task HandleCartChangedAsync(object sender, ChangedEventArgs e)
     {
         if (e.Key == "cart")
         {
-            items = await CartService.GetCartItemsAsync();
+            _cartInfo = await CartService.GetCartInfoAsync();
             StateHasChanged();
         }
     }
 
-    private async Task RemoveCartItemsAsync(Item item)
+    private async Task RemoveCartItemsAsync(CartItem cartItem)
     {
-        await CartService.RemoveCartItemAsync(item);
-        items = await CartService.GetCartItemsAsync();
+        await CartService.RemoveCartItemAsync(cartItem);
+        _cartInfo = await CartService.GetCartInfoAsync();
     }
 
-    private async Task PlaceOrder()
+    private async Task HandleProcessPaymentAsync()
     {
-        orderPlaced = true;
+        await CartService.ProcessPaymentAsync();
+    }
 
-        var userInfo = await AuthService.GetUserInfoAsync();
-        if (userInfo != null)
+    private async Task SetPaymentMethod(TransactionTender tender)
+    {
+        tender.SequenceNumber = (short)(_cartInfo.Tenders.Count() + 1);
+
+        @* var tenderItem = _cartInfo.Tenders?.FirstOrDefault(x => x.Type == tender.Type);
+        if (tenderItem != null)
         {
-            // TODO:
+            
         }
-
-        var cartItems = await CartService.GetCartItemsAsync();
-        var request = new PlaceOrderRequest
-            {
-                UserId = userInfo.Id,
-                CustomerId = null,
-                Items = cartItems,
-                Status = OrderStatus.Pending,
-                CreatedDate = DateTime.UtcNow,
-            };
-
-        var order = await OrderService.PlaceOrderAsync(request);
-        await CartService.EmptyCart();
-        items = [];
+        else
+        {
+        } *@
+        _cartInfo.Tenders.Add(tender);
+        _cartInfo.Tenders.Distinct();
+        await CartService.UpdateCartInforAsync(_cartInfo);
     }
 }

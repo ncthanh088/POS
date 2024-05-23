@@ -6,5 +6,5 @@ public class Category
     public string Description { get; set; }
     public string Icon { get; set; }
     public string Color { get; set; }
-    public List<Product> Products { get; set; }
+    public List<Item> Items { get; set; }
 }

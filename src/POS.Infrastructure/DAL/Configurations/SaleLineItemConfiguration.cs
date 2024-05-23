@@ -19,7 +19,6 @@ namespace POS.Infrastructure.DAL.Configurations
             builder.Property(x => x.Quantity);
             builder.Property(x => x.ActualUnitPrice);
             builder.Property(x => x.ExtendedPrice);
-            builder.Property(x => x.TotalPrice);
         }
     }
 }

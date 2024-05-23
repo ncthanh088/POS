@@ -1,8 +1,8 @@
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using POS.Application.Items.Queries;
 using POS.Application.Items.Commands;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace POS.Api.Controllers;
 
@@ -28,10 +28,10 @@ public class ItemsController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("{itemID}")]
-    public async Task<ActionResult> Get(int itemID)
+    [HttpGet("itemId")]
+    public async Task<ActionResult> Get([FromQuery] int itemId)
     {
-        var response = await _mediator.Send(new GetItem(itemID));
+        var response = await _mediator.Send(new GetItem(itemId));
 
         return Ok(response);
     }
@@ -44,10 +44,10 @@ public class ItemsController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("categoryID")]
-    public async Task<ActionResult> GetProductsByCateogryId([FromQuery] int categoryID)
+    [HttpGet("categoryId")]
+    public async Task<ActionResult> GetProductsByCateogryId([FromQuery] int categoryId)
     {
-        var response = await _mediator.Send(new GetItemsByCategoryID(categoryID));
+        var response = await _mediator.Send(new GetItemsByCategoryId(categoryId));
 
         return Ok(response);
     }

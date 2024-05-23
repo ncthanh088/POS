@@ -20,10 +20,12 @@ public class LineItemRepository : ILineItemRepository
     public async Task CreateTaxLineItemAsync(TaxLineItem taxLineItem)
     {
         await _dbContext.TaxLineItems.AddAsync(taxLineItem);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task CreateTenderLineItemAsync(TenderLineItem tenderLineItem)
     {
         await _dbContext.TenderLineItems.AddAsync(tenderLineItem);
+        await _dbContext.SaveChangesAsync();
     }
 }

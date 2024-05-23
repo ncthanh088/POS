@@ -9,7 +9,6 @@ namespace POS.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Tax> builder)
         {
-            builder.ToTable("Taxes");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id);
         }

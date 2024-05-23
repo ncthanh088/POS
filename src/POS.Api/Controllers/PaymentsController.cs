@@ -23,14 +23,14 @@ public class PaymentsController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("calculate-sale-transaction")]
+    [HttpPost("calculate")]
     public async Task<IActionResult> CalculateSaleTransactionAsync([FromBody] CalculateSaleTransaction request)
     {
         var response = await _mediator.Send(request);
         return Ok(response);
     }
 
-    [HttpPost("sale-transaction")]
+    [HttpPost("transaction")]
     public async Task<IActionResult> CreateSaleTransactionAsync([FromBody] CreateSaleTransaction request)
     {
         var response = await _mediator.Send(request);

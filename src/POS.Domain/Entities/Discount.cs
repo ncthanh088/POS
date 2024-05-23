@@ -9,4 +9,6 @@ public class Discount
     public decimal Amount { get; set; }
     public DateTime EffectiveFrom { get; set; }
     public DateTime EffectiveTo { get; set; }
+    public bool InclusiveOfTax { get; set; }
+    public bool IsRequiredMember { get; set; }
 }

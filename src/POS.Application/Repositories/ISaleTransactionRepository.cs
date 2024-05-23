@@ -1,8 +1,9 @@
+using POS.Application.DTO;
 using POS.Domain.Entities;
 
 namespace POS.Application.Repositories;
 
 public interface ISaleTransactionRepository
 {
-    Task CreateSaleTransaction(SaleTransaction saleTransaction);
+    Task<SaleTransactionDto> CreateSaleTransaction(SaleTransaction saleTransaction);
 }

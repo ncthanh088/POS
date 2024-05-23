@@ -3,6 +3,7 @@ namespace POS.Application.Payments.Commands;
 public class TransactionItem
 {
     public long Id { get; set; }
+    public long TransactionId { get; set; }
     public int ItemId { get; set; }
     public string Name { get; set; }
     public short SequenceNumber { get; set; }
@@ -10,6 +11,23 @@ public class TransactionItem
     public decimal UnitPrice { get; set; }
     public Tax Tax { get; set; }
     public Discount Discount { get; set; }
+    public decimal? BeforeDiscountUnitPrice { get; set; }
+    public decimal BeforeDiscountPriceExcludingTax
+    {
+        get
+        {
+            decimal p = BeforeDiscountUnitPrice.HasValue ? BeforeDiscountUnitPrice.Value : ActualUnitPrice;
+            if (p == decimal.Zero)
+            {
+                return p;
+            }
+            else
+            {
+                var tax = CalculateOrigTaxBeforeVATExemption(p);
+                return decimal.Subtract(p, tax);
+            }
+        }
+    }
     public decimal RegularUnitPrice { get; set; } = 0M;
     public decimal TotalTax { get; set; }
     public bool TaxOnGrossAmount { get; set; }

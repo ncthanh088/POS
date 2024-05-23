@@ -15,5 +15,9 @@ namespace POS.Domain.Entities
         public bool IsCancelled { get; set; }
         public bool IsVoided { get; set; }
         public bool IsRefund { get; set; }
+
+        public IEnumerable<SaleLineItem> SaleLineItems { get; set; }
+        public IEnumerable<TaxLineItem> TaxLineItems { get; set; }
+        public IEnumerable<TenderLineItem> TenderLineItems { get; set; }
     }
 }

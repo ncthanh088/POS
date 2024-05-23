@@ -47,12 +47,13 @@
 
 
 @code {
-    private SignInRequest signInRequest = new();
+    private SignIn signInRequest = new();
 
     private async Task HandleLogin()
     {
         var jwt = await AuthService.SignIn(signInRequest.Email, signInRequest.Password);
         await LocalStorage.SetItemAsync("token", jwt.AccessToken);
+        await AuthService.GetUserInfoAsync();
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
         if (authState.User.Identity.IsAuthenticated)
         {

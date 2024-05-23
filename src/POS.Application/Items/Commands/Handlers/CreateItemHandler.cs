@@ -21,12 +21,12 @@ namespace POS.Application.Items.Commands.Handlers
             {
                 Name = request.Name,
                 Description = request.Description,
-                Type = request.Type.ToEnum(ItemType.Other),
+                Type = request.Type.ToEnum(ItemType.Sale),
                 Vendor = request.Vendor,
                 Price = request.Price,
                 Quantity = request.Quantity,
                 ImageUrl = request.ImageUrl,
-                CategoryID = request.CategoryID
+                CategoryId = request.CategoryID
             };
 
             await _itemRepository.AddAsync(item);

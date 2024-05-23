@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using POS.Application.DTO;
 using POS.Application.Security;
@@ -30,7 +30,7 @@ public class UsersController : ControllerBase
         if (string.IsNullOrWhiteSpace(User.Identity?.Name))
             return NotFound();
 
-        var userId = Guid.Parse(User.Identity?.Name);
+        var userId = int.Parse(User.Identity?.Name);
         var user = await _mediator.Send(new GetUser { UserId = userId });
 
         return user;
@@ -48,10 +48,7 @@ public class UsersController : ControllerBase
     [HttpPost("sign-up")]
     public async Task<ActionResult> Post(SignUp request)
     {
-        var userId = Guid.NewGuid();
-        request = request with { UserId = userId };
         await _mediator.Send(request);
-
-        return Ok(userId);
+        return Ok();
     }
 }

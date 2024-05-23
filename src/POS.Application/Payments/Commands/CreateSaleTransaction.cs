@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
+using POS.Application.DTO;
 
 namespace POS.Application.Payments.Commands
 {
-    public class CreateSaleTransaction : IRequest
+    public class CreateSaleTransaction : IRequest<SaleTransactionDto>
     {
-
+        public int UserId { get; set; }
+        public int? MemberId { get; set; }
+        public string TransactionType { get; set; }
     }
 }

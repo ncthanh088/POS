@@ -1,13 +1,13 @@
-using System.Globalization;
-using System.Text;
 using POS.Domain.Enums;
+using System.Text;
+using System.Globalization;
 
 namespace POS.Application.Payments.Commands;
 
 public class BaseSaleTransaction
 {
-    public Guid UserId { get; set; }
-    public Guid? CustomerId { get; set; }
+    public int UserId { get; set; }
+    public int? CustomerId { get; set; }
     public long TransactionId { get; set; }
     public int WorkstationId { get; set; }
     public int TransactionNumber { get; set; }
@@ -57,7 +57,7 @@ public class BaseSaleTransaction
             return IsComplete ? TenderTotal - RoundedAmount : 0;
         }
     }
-    public decimal RoundingAmount { get; set; } = 0M;
+    public decimal RoundingAmount { get; set; } = decimal.Zero;
     public decimal RoundedAmount
     {
         get
@@ -66,10 +66,10 @@ public class BaseSaleTransaction
         }
     }
 
-    public IEnumerable<TransactionItem> Items { get; set; }
     public IEnumerable<TransactionTax> Taxes { get; set; }
-    public IEnumerable<TransactionTender> Tenders { get; set; }
-    public DateTime CreatedDate { get; set; }
+    public ICollection<TransactionItem> Items { get; set; }
+    public ICollection<TransactionTender> Tenders { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public string TransactionReferenceNumber
     {
@@ -77,9 +77,9 @@ public class BaseSaleTransaction
         {
             var referenceNumber = new StringBuilder();
             referenceNumber.AppendFormat("{0:000}", WorkstationId);
-            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:yy}", CreatedDate);
-            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:00}", CreatedDate.Month);
-            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:00}", CreatedDate.Day);
+            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:yy}", CreatedAt);
+            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:00}", CreatedAt.Month);
+            referenceNumber.AppendFormat(CultureInfo.InvariantCulture, "{0:00}", CreatedAt.Day);
             referenceNumber.AppendFormat("{0:0000}", TransactionNumber);
             return referenceNumber.ToString();
         }

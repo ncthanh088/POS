@@ -5,7 +5,7 @@ using POS.Application.Repositories;
 
 namespace POS.Application.Customers.Handlers;
 
-internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Guid>
+internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, int>
 {
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<Customer> _customerRepository;
@@ -16,7 +16,7 @@ internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Gu
         _customerRepository = customerRepository;
     }
 
-    public async Task<Guid> Handle(CreateCustomer request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateCustomer request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.FindAsync(x => x.Id == request.CustomerId);
         if (user is null)
@@ -26,17 +26,22 @@ internal sealed class CreateCustomerHandler : IRequestHandler<CreateCustomer, Gu
 
         if (user.Role != "User")
         {
-            return Guid.Empty;
+            return int.MinValue;
         }
 
         var customerId = user.Id;
-        // var currentcustomer = await _customerRepository.FindAsync(x => x.CustomerId == customerId);
-        if (await _customerRepository.FindAsync(x => x.CustomerId == customerId) is not null)
+        if (await _customerRepository.FindAsync(x => x.Id == customerId) is not null)
         {
             throw new CustomerAlreadyExistsException(customerId);
         }
 
-        var customer = new Customer(customerId, request.FirstName, request.LastName, request.Phone, request.Address);
+        var customer = new Customer
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Phone = request.Phone,
+            Address = request.Address,
+        };
         await _customerRepository.AddAsync(customer);
         return user.Id;
     }

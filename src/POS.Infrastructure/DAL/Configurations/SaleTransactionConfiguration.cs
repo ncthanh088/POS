@@ -1,6 +1,6 @@
+using POS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using POS.Domain.Entities;
 
 namespace POS.Infrastructure.DAL.Configurations
 {
