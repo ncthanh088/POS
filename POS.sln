@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POS.Infrastructure", "src\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POS.WebApp", "src\POS.WebApp\POS.WebApp.csproj", "{DEB2451B-74E6-4193-99F9-891FA32265BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.MultiApp", "src\POS.MultiApp\POS.MultiApp.csproj", "{7822FA21-6500-4318-9B0D-89973C5E8254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POS.MultiApp", "src\POS.MultiApp\POS.MultiApp.csproj", "{7822FA21-6500-4318-9B0D-89973C5E8254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

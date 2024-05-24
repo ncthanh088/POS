@@ -33,10 +33,17 @@ public class AuthService : IAuthService
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
+            _localStorage.RemoveValue<Jwt>(Constants.Constant.JWT_KEY);
             throw new ApplicationException(content);
         }
         user = JsonSerializer.Deserialize<UserInfo>(content, _options);
         return user;
+    }
+
+    public Task LogoutAsync()
+    {
+        _localStorage.RemoveAll();
+        return Task.CompletedTask;
     }
 
     public async Task<Jwt> SignIn(string email, string password)

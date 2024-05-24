@@ -37,4 +37,9 @@ public class LocalStorage : ILocalStorage
     {
         Changed?.Invoke(this, e);
     }
+
+    public void RemoveAll()
+    {
+        SecureStorage.Default.RemoveAll();
+    }
 }

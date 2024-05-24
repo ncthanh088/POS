@@ -1,0 +1,19 @@
+﻿@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<div>
+    <button class="bg---bg-black2 text-xs text-white" @onclick="()=> HandleSignOutAsync()" >
+        Sign out
+    </button>
+</div>
+
+@code {
+
+
+    private async Task HandleSignOutAsync()
+    {
+        Console.WriteLine("handledlfjdlfjdlfjdl");
+        await AuthService.LogoutAsync();
+        NavigationManager.NavigateTo("/login");
+    }
+}

@@ -1,3 +1,8 @@
 ﻿<section id="footer">
-    <label class="text-gray-400 text-sm ml-2" for="">&commat;2024 ePOS by Alex.</label>
+    <label class="ml-2 text-sm text-gray-400" for="">&commat;2024 ePOS by Alex.</label>
+    <SignOutComponent />
 </section>
+@code {
+    [Parameter]
+    public CustomerInfo CustomerInfo { get; set; }
+}

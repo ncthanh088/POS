@@ -11,6 +11,6 @@ namespace POS.MultiApp.Events
             Key = key;
         }
 
-        public object? Key { get; set; }
+        public object Key { get; set; }
     }
 }

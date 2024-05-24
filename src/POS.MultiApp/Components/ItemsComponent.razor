@@ -1,11 +1,11 @@
-@inject IItemService ItemService
+﻿@inject IItemService ItemService
 @inject ICartService CartService
 
 <article id="products">
-    <div class=" px-6">
-        <hr class="border-gray-700 border-1 w-full">
+    <div class="px-6">
+        <hr class="border-1 w-full border-gray-700">
     </div>
-    <ul class="grid grid-cols-4 gap-3 pr-6 py-3">
+    <div class="grid-cols-4 grid gap-3 py-3 pr-6">
         @if (items?.Count() > 0)
         {
             @foreach (var item in items)
@@ -18,20 +18,20 @@
                         ItemId = item.Id,
                     };
                 var backgroundSize = cartItem.Quantity > 0 ? "" : "3%";
-                <div class="relative rounded-md min-h-28 w-full overflow-hidden -bg--bg-black2 text-gray-300">
-                    <div class="absolute h-full top-0 left-0"
+                <div class="-bg--bg-black2 relative min-h-28 w-full overflow-hidden rounded-md text-gray-300">
+                    <div class="absolute left-0 top-0 h-full"
                          style="background-color: @Category.Color; width: @backgroundSize;">
                     </div>
-                    <div class="p-3 flex flex-col justify-between  items-start text-sm min-h-28 w-auto z-1">
+                    <div class="z-1 flex min-h-28 w-auto flex-col items-start justify-between p-3 text-sm">
                         <div>
                             <h2 class="text-[0.5rem]">
                                 @Category.Name &rarr;
                                 <span>Sale</span>
                             </h2>
-                            <h3 class="text-[0.7rem]  font-normal">@cartItem.Name</h3>
+                            <h3 class="text-[0.7rem] font-normal">@cartItem.Name</h3>
                             <h4 class="text-[0.6rem]">$@cartItem.UnitPrice</h4>
                         </div>
-                        <div class="w-full flex justify-end -text--grey">
+                        <div class="-text--grey flex w-full justify-end">
                             <AddCartItemComponent CartItem="cartItem" OnQuantityChanged="HandleQuantityChanged" />
                         </div>
                     </div>
@@ -40,9 +40,9 @@
         }
         else
         {
-            <h2 class="text-gray-400 text-sm mt-2">There are currently no products for sale.</h2>
+            <h2 class="mt-2 text-sm text-gray-400">There are currently no products for sale.</h2>
         }
-    </ul>
+    </div>
 </article>
 
 
@@ -64,7 +64,7 @@
 
     protected override void OnInitialized()
     {
-        ItemService.OnChange += StateHasChanged;
+        // ItemService.OnChange += StateHasChanged;
     }
 
     private Task HandleQuantityChanged(CartItem cartItem)

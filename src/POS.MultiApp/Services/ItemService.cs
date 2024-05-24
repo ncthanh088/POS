@@ -7,7 +7,7 @@ namespace POS.MultiApp.Services
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerOptions _options;
-        public event Action OnChange;
+        //public event Action OnChange;
 
         public ItemService(HttpClient client)
         {
